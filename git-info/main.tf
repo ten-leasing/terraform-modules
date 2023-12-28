@@ -4,5 +4,5 @@ locals {
 }
 
 output "remotes" {
-  value = { for remote in local.remotes : remote.name => remote.url }
+  value = { for remote in local.remotes : replace(remote.name, "azure", "az") => remote.url }
 }
