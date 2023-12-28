@@ -4,5 +4,5 @@ locals {
 }
 
 output "remotes" {
-  value = { for remote in module.git_info.remotes : remote.name => remote.url }
+  value = { for remote in local.remotes : remote.name => remote.url }
 }
