@@ -1,7 +1,8 @@
-data "external" "remote" {
-  program = ["git", "remote", "-vv"]
+locals {
+  git_config_content = file(".git/config")
+  remotes            = regex("\\[remote \"(.*)\"\\]\\n.*url.*=.*(https.*)", local.git_config_content)
 }
 
-output "git_remote" {
-  value = data.external.remote.result
+output "git_remotes" {
+  value = local.remotes
 }
