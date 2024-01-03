@@ -26,8 +26,8 @@ data "azurerm_virtual_network" "hub" {
 }
 
 resource "azurerm_virtual_network" "managed_instance" {
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_user_assigned_identity.managed_instance.resource_group_name
+  location            = azurerm_user_assigned_identity.managed_instance.location
   tags                = merge(var.tags, {})
 
   name          = "${var.resource_name_prefix}-mi-vnet"
@@ -61,7 +61,7 @@ module "hub_and_data_peering" {
 }
 
 resource "azurerm_subnet" "managed_instance" {
-  resource_group_name  = azurerm_resource_group.data.name
+  resource_group_name  = azurerm_virtual_network.managed_instance.resource_group_name
   virtual_network_name = azurerm_virtual_network.managed_instance.name
   name                 = "ManagedInstance"
   address_prefixes     = [azurerm_virtual_network.managed_instance.address_space[0]]

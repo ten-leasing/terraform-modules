@@ -37,7 +37,7 @@ output "gateway_public_ip" {
 }
 
 resource "azurerm_subnet" "gateway" {
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = azurerm_virtual_network.hub.resource_group_name
   virtual_network_name = azurerm_virtual_network.hub.name
   name                 = "GatewaySubnet"
   address_prefixes = [
@@ -46,8 +46,8 @@ resource "azurerm_subnet" "gateway" {
 }
 
 resource "azurerm_virtual_network_gateway" "internal" {
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_public_ip.gateway.resource_group_name
+  location            = azurerm_public_ip.gateway.location
 
   name          = "${var.resource_name_prefix}-internal-vgw"
   sku           = var.virtual_network_gateway_sku

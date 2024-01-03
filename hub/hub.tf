@@ -17,8 +17,8 @@ variable "global_vnet_address_space" {
 }
 
 resource "azurerm_virtual_network" "hub" {
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_public_ip.gateway.resource_group_name
+  location            = azurerm_public_ip.gateway.location
 
   name = "${var.resource_name_prefix}-hub-vnet"
   tags = merge(var.tags, {})

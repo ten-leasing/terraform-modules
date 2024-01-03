@@ -1,6 +1,6 @@
 resource "azurerm_network_security_group" "managed_instance" {
-  resource_group_name = azurerm_resource_group.data.name
-  location            = azurerm_resource_group.data.location
+  resource_group_name = azurerm_subnet.managed_instance.resource_group_name
+  location            = azurerm_virtual_network.managed_instance.location
   tags                = merge(var.tags, {})
   name                = "${var.resource_name_prefix}-mi-sg"
 }
@@ -12,7 +12,7 @@ resource "azurerm_subnet_network_security_group_association" "managed_instance" 
 
 resource "azurerm_network_security_rule" "allow_public_access_in" {
   count                       = var.expose_to_public ? 1 : 0
-  resource_group_name         = azurerm_resource_group.data.name
+  resource_group_name         = azurerm_subnet.managed_instance.resource_group_name
   network_security_group_name = azurerm_network_security_group.managed_instance.name
 
   name   = "public_access"
