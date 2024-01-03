@@ -6,7 +6,7 @@ variable "resource_group_name" {
 }
 
 output "resource_group_name" {
-  value = azurerm_public_ip.gateway.resource_group_name
+  value = azurerm_virtual_network.main.resource_group_name
 }
 
 variable "location" {
