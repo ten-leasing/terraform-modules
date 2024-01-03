@@ -55,6 +55,6 @@ resource "azurerm_mssql_managed_instance" "self" {
   public_data_endpoint_enabled = var.expose_to_public
 }
 
-output "managed_instance_fqdn" {
+output "fqdn" {
   value = azurerm_mssql_managed_instance.self.fqdn
 }
