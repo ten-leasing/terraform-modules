@@ -15,6 +15,10 @@ resource "azurerm_virtual_network" "hub" {
   address_space = var.vnet_address_space
 }
 
+output "vnet_resource_group_name" {
+  value = azurerm_virtual_network.hub.resource_group_name
+}
+
 output "vnet_id" {
   value = azurerm_virtual_network.hub.id
 }
