@@ -1,9 +1,9 @@
-variable "vnet_address_space" {
-  type = list(string)
+locals {
+  power_bi_data_gateway_subnet_address_prefixes = cidrsubnets(var.vnet_address_space, 0)
 }
 
-variable "power_bi_data_gateway_subnet_address_prefixes" {
-  type = list(string)
+variable "vnet_address_space" {
+  type = string
 }
 
 resource "azurerm_virtual_network" "main" {
@@ -13,7 +13,7 @@ resource "azurerm_virtual_network" "main" {
 
   name = "${var.resource_name_prefix}-reporting-vnet"
 
-  address_space = var.vnet_address_space
+  address_space = [var.vnet_address_space]
 }
 
 output "vnet_resource_group_name" {
@@ -46,7 +46,7 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
     }
   }
 
-  address_prefixes = var.power_bi_data_gateway_subnet_address_prefixes
+  address_prefixes = local.power_bi_data_gateway_subnet_address_prefixes
 }
 
 output "power_bi_data_gateway_subnet_address_prefixes" {
