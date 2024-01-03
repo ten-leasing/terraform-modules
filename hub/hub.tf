@@ -1,14 +1,6 @@
 locals {
 }
 
-variable "global_vnet_address_size" {
-  type = number
-}
-
-variable "global_vnet_address_space" {
-  type = string
-}
-
 variable "vnet_address_space" {
   type = list(string)
 }

@@ -1,10 +1,6 @@
 locals {
 }
 
-variable "global_vnet_address_space" {
-  type = string
-}
-
 variable "vnet_address_space" {
   type = list(string)
 }
