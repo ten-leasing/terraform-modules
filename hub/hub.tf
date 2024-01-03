@@ -26,18 +26,14 @@ resource "azurerm_virtual_network" "hub" {
   address_space = local.hub_address_space
 }
 
-output "hub_resource_group_name" {
-  value = azurerm_virtual_network.hub.resource_group_name
-}
-
-output "hub_network_id" {
+output "vnet_id" {
   value = azurerm_virtual_network.hub.id
 }
 
-output "hub_network_name" {
+output "vnet_name" {
   value = azurerm_virtual_network.hub.name
 }
 
-output "hub_address_space" {
+output "address_space" {
   value = azurerm_virtual_network.hub.address_space
 }
