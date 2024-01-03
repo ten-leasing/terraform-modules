@@ -1,6 +1,10 @@
 locals {
-  power_bi_overall_address_range = [cidrsubnet(data.terraform_remote_state.global.outputs.vnet_global_address_space, 8, 5)]
+  power_bi_overall_address_range = [cidrsubnet(var.global_vnet_address_space, 8, 5)]
   logins                         = { "powerbi.reporting@starleasing.com" : "public" }
+}
+
+variable "global_vnet_address_space" {
+  type = string
 }
 
 data "azurerm_mssql_managed_instance" "main" {
