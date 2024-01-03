@@ -34,6 +34,6 @@ output "vnet_name" {
   value = azurerm_virtual_network.hub.name
 }
 
-output "address_space" {
+output "vnet_address_space" {
   value = azurerm_virtual_network.hub.address_space
 }
