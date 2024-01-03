@@ -51,3 +51,7 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
   # pass it in as a variable
   address_prefixes = var.power_bi_data_gateway_subnet_address_prefixes
 }
+
+output "power_bi_data_gateway_subnet_address_prefixes" {
+  value = azurerm_subnet.power_bi_data_gateway.address_prefixes
+}
