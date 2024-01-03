@@ -15,7 +15,7 @@ variable "virtual_network_gateway_sku" {
 
 resource "azurerm_subnet" "gateway" {
   resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network_gateway.internal.name
+  virtual_network_name = azurerm_virtual_network.main.name
   name                 = "GatewaySubnet"
   address_prefixes     = [local.gateway_subnet_address_prefixes]
 }
