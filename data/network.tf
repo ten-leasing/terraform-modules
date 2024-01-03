@@ -1,13 +1,12 @@
 locals {
-  vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, var.vnet_id)]
-}
-
-variable "vnet_id" {
-  type = number
 }
 
 variable "global_vnet_address_space" {
   type = string
+}
+
+variable "vnet_address_space" {
+  type = list(string)
 }
 
 variable "hub_vnet_resource_group_name" {
@@ -32,7 +31,7 @@ resource "azurerm_virtual_network" "managed_instance" {
   tags                = merge(var.tags, {})
 
   name          = "${var.resource_name_prefix}-mi-vnet"
-  address_space = local.vnet_address_space
+  address_space = var.vnet_address_space
 }
 
 output "vnet_id" {

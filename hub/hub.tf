@@ -1,11 +1,4 @@
 locals {
-  hub_vnet_reserved_subnet_size = 24
-  hub_vnet_subnet_newbits       = local.hub_vnet_reserved_subnet_size - var.global_vnet_address_size
-  hub_address_space             = [cidrsubnet(var.global_vnet_address_space, local.hub_vnet_subnet_newbits, var.hub_vnet_id)]
-}
-
-variable "hub_vnet_id" {
-  type = number
 }
 
 variable "global_vnet_address_size" {
@@ -16,6 +9,10 @@ variable "global_vnet_address_space" {
   type = string
 }
 
+variable "vnet_address_space" {
+  type = list(string)
+}
+
 resource "azurerm_virtual_network" "hub" {
   resource_group_name = azurerm_public_ip.gateway.resource_group_name
   location            = azurerm_public_ip.gateway.location
@@ -23,7 +20,7 @@ resource "azurerm_virtual_network" "hub" {
   name = "${var.resource_name_prefix}-hub-vnet"
   tags = merge(var.tags, {})
 
-  address_space = local.hub_address_space
+  address_space = var.vnet_address_space
 }
 
 output "vnet_id" {

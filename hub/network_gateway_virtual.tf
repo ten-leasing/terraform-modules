@@ -3,8 +3,6 @@ locals {
   azure_public_audience            = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
   gateway_client_vpn_address_size  = 24
   gateway_client_vpn_address_space = "192.168.202.0/${local.gateway_client_vpn_address_size}"
-  gateway_subnet_size              = 27
-  gateway_subnet_newbits           = local.gateway_subnet_size - local.hub_vnet_reserved_subnet_size
 }
 
 data "azurerm_client_config" "current" {}
@@ -12,6 +10,10 @@ data "azurerm_client_config" "current" {}
 variable "virtual_network_gateway_sku" {
   type    = string
   default = "VpnGw2"
+}
+
+variable "gateway_subnet_address_prefixes" {
+  type = list(string)
 }
 
 resource "azurerm_public_ip" "gateway" {
@@ -40,9 +42,7 @@ resource "azurerm_subnet" "gateway" {
   resource_group_name  = azurerm_virtual_network.hub.resource_group_name
   virtual_network_name = azurerm_virtual_network.hub.name
   name                 = "GatewaySubnet"
-  address_prefixes = [
-    cidrsubnet(azurerm_virtual_network.hub.address_space.0, local.gateway_subnet_newbits, 1)
-  ]
+  address_prefixes     = var.gateway_subnet_address_prefixes
 }
 
 resource "azurerm_virtual_network_gateway" "internal" {

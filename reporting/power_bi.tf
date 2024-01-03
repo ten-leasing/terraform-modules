@@ -12,6 +12,11 @@ variable "global_vnet_address_space" {
   type = string
 }
 
+variable "vnet_address_space" {
+  type    = number
+  default = 5
+}
+
 variable "managed_instance_resource_group_name" {
   type = string
 }
@@ -25,12 +30,12 @@ data "azurerm_mssql_managed_instance" "main" {
   name                = var.managed_instance_name
 }
 
-resource "azurerm_virtual_network" "power_bi" {
+resource "azurerm_virtual_network" "main" {
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = merge(var.tags, {})
 
-  name = "${var.resource_name_prefix}-power_bi-vnet"
+  name = "${var.resource_name_prefix}-reporting-vnet"
 
   address_space = local.power_bi_overall_address_range
 }
