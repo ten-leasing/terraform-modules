@@ -1,6 +1,6 @@
 resource "azurerm_network_security_group" "managed_instance" {
-  resource_group_name = azurerm_subnet.managed_instance.resource_group_name
-  location            = azurerm_virtual_network.managed_instance.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
   name                = "${var.resource_name_prefix}-mi-sg"
 }
