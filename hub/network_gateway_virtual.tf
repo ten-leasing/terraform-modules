@@ -3,6 +3,7 @@ locals {
   azure_public_audience            = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
   gateway_client_vpn_address_size  = 24
   gateway_client_vpn_address_space = "192.168.202.0/${local.gateway_client_vpn_address_size}"
+  gateway_subnet_address_prefixes  = cidrsubnets(var.vnet_address_space, 0)
 }
 
 data "azurerm_client_config" "current" {}
@@ -12,37 +13,11 @@ variable "virtual_network_gateway_sku" {
   default = "VpnGw2"
 }
 
-variable "gateway_subnet_address_prefixes" {
-  type = list(string)
-}
-
-resource "azurerm_public_ip" "gateway" {
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  name                = "${var.resource_name_prefix}-internal-vgw-pip"
-  tags                = merge(var.tags, {})
-  allocation_method   = "Static"
-  sku                 = "Standard"
-  domain_name_label   = "${var.resource_name_prefix}-gw"
-}
-
-output "gateway_public_ip_domain_name" {
-  value = azurerm_public_ip.gateway.domain_name_label
-}
-
-output "gateway_public_ip_id" {
-  value = azurerm_public_ip.gateway.id
-}
-
-output "gateway_public_ip" {
-  value = azurerm_public_ip.gateway.ip_address
-}
-
 resource "azurerm_subnet" "gateway" {
   resource_group_name  = azurerm_virtual_network.main.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
   name                 = "GatewaySubnet"
-  address_prefixes     = var.gateway_subnet_address_prefixes
+  address_prefixes     = local.gateway_subnet_address_prefixes
 }
 
 output "gateway_subnet_address_prefixes" {

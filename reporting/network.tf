@@ -46,9 +46,6 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
     }
   }
 
-  # FIXME Only need around 8 - 16 IPs
-  # Or better yet, just like we did with the hub gateway subnet address prefix,
-  # pass it in as a variable
   address_prefixes = var.power_bi_data_gateway_subnet_address_prefixes
 }
 

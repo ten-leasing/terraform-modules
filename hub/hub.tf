@@ -2,7 +2,7 @@ locals {
 }
 
 variable "vnet_address_space" {
-  type = list(string)
+  type = string
 }
 
 resource "azurerm_virtual_network" "main" {
@@ -12,7 +12,7 @@ resource "azurerm_virtual_network" "main" {
   name = "${var.resource_name_prefix}-hub-vnet"
   tags = merge(var.tags, {})
 
-  address_space = var.vnet_address_space
+  address_space = [var.vnet_address_space]
 }
 
 output "vnet_resource_group_name" {
