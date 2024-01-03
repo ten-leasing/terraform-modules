@@ -14,10 +14,10 @@ variable "virtual_network_gateway_sku" {
 }
 
 resource "azurerm_subnet" "gateway" {
-  resource_group_name  = azurerm_virtual_network.main.resource_group_name
-  virtual_network_name = azurerm_virtual_network.main.name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network_gateway.internal.name
   name                 = "GatewaySubnet"
-  address_prefixes     = local.gateway_subnet_address_prefixes
+  address_prefixes     = [local.gateway_subnet_address_prefixes]
 }
 
 output "gateway_subnet_address_prefixes" {
@@ -25,8 +25,8 @@ output "gateway_subnet_address_prefixes" {
 }
 
 resource "azurerm_virtual_network_gateway" "internal" {
-  resource_group_name = azurerm_public_ip.gateway.resource_group_name
-  location            = azurerm_public_ip.gateway.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
 
   name          = "${var.resource_name_prefix}-internal-vgw"
   sku           = var.virtual_network_gateway_sku

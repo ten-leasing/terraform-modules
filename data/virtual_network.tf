@@ -6,8 +6,8 @@ variable "vnet_address_space" {
 }
 
 resource "azurerm_virtual_network" "main" {
-  resource_group_name = azurerm_user_assigned_identity.managed_instance.resource_group_name
-  location            = azurerm_user_assigned_identity.managed_instance.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name          = "${var.resource_name_prefix}-mi-vnet"

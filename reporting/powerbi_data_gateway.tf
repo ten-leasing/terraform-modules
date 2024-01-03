@@ -3,7 +3,7 @@ locals {
 }
 
 resource "azurerm_subnet" "power_bi_data_gateway" {
-  resource_group_name  = azurerm_virtual_network.main.resource_group_name
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
 
   name = "PowerBIDataGateway"
@@ -16,7 +16,7 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
     }
   }
 
-  address_prefixes = local.power_bi_data_gateway_subnet_address_prefixes
+  address_prefixes = [local.power_bi_data_gateway_subnet_address_prefixes]
 }
 
 output "power_bi_data_gateway_subnet_address_prefixes" {
