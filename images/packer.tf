@@ -1,5 +1,5 @@
 locals {
-  packer_subnet_address_prefixes = cidrsubnet(azurerm_virtual_network.main.address_space, 0, 0)
+  packer_subnet_address_prefixes = cidrsubnet(one(azurerm_virtual_network.main.address_space), 0, 0)
 }
 
 resource "azurerm_subnet" "packer" {

@@ -1,5 +1,5 @@
 locals {
-  power_bi_data_gateway_subnet_address_prefixes = cidrsubnet(azurerm_virtual_network.main.address_space, 0, 0)
+  power_bi_data_gateway_subnet_address_prefixes = cidrsubnet(one(azurerm_virtual_network.main.address_space), 0, 0)
 }
 
 resource "azurerm_subnet" "power_bi_data_gateway" {

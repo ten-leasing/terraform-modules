@@ -1,5 +1,5 @@
 locals {
-  managed_instance_subnet = cidrsubnet(azurerm_virtual_network.main.address_space, 0, 0)
+  managed_instance_subnet = cidrsubnet(one(azurerm_virtual_network.main.address_space), 0, 0)
 
   service_tiers = {
     "General Purpose" : "GP",
