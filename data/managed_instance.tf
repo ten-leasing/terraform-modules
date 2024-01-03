@@ -37,7 +37,7 @@ resource "azurerm_subnet" "managed_instance" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
   name                 = "ManagedInstance"
-  address_prefixes     = local.managed_instance_subnet
+  address_prefixes     = [local.managed_instance_subnet]
 
   delegation {
     name = "managed_instance"
