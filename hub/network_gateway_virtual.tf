@@ -39,8 +39,8 @@ output "gateway_public_ip" {
 }
 
 resource "azurerm_subnet" "gateway" {
-  resource_group_name  = azurerm_virtual_network.hub.resource_group_name
-  virtual_network_name = azurerm_virtual_network.hub.name
+  resource_group_name  = azurerm_virtual_network.main.resource_group_name
+  virtual_network_name = azurerm_virtual_network.main.name
   name                 = "GatewaySubnet"
   address_prefixes     = var.gateway_subnet_address_prefixes
 }

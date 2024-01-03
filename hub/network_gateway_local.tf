@@ -13,8 +13,8 @@ variable "vpn_appliance_address" {
 }
 
 resource "azurerm_local_network_gateway" "internal" {
-  resource_group_name = azurerm_virtual_network.hub.resource_group_name
-  location            = azurerm_virtual_network.hub.location
+  resource_group_name = azurerm_virtual_network.main.resource_group_name
+  location            = azurerm_virtual_network.main.location
   tags                = merge(var.tags, {})
 
   name            = "${var.resource_name_prefix}-internal-lgw"
