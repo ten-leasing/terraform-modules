@@ -13,8 +13,8 @@ resource "azurerm_virtual_network" "main" {
 }
 
 resource "azurerm_subnet" "power_bi_data_gateway" {
-  resource_group_name  = azurerm_virtual_network.power_bi.resource_group_name
-  virtual_network_name = azurerm_virtual_network.power_bi.name
+  resource_group_name  = azurerm_virtual_network.main.resource_group_name
+  virtual_network_name = azurerm_virtual_network.main.name
 
   name = "PowerBIDataGateway"
 
@@ -26,5 +26,5 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
     }
   }
 
-  address_prefixes = [cidrsubnet(azurerm_virtual_network.power_bi.address_space[0], 4, 0)]
+  address_prefixes = [cidrsubnet(azurerm_virtual_network.main.address_space[0], 4, 0)]
 }
