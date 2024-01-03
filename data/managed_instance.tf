@@ -1,4 +1,6 @@
 locals {
+  managed_instance_subnet = cidrsubnet(azurerm_virtual_network.main.address_space, 0, 0)
+
   service_tiers = {
     "General Purpose" : "GP",
     "Business Critical" : "BC",
@@ -31,9 +33,32 @@ variable "expose_to_public" {
   default = false
 }
 
+resource "azurerm_subnet" "managed_instance" {
+  resource_group_name  = azurerm_virtual_network.data.resource_group_name
+  virtual_network_name = azurerm_virtual_network.data.name
+  name                 = "ManagedInstance"
+  address_prefixes     = local.managed_instance_subnet
+
+  delegation {
+    name = "managed_instance"
+    service_delegation {
+      name = "Microsoft.Sql/managedInstances"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+        "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+        "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action",
+      ]
+    }
+  }
+}
+
+output "subnet_address_prefixes" {
+  value = azurerm_subnet.managed_instance.address_prefixes
+}
+
 resource "azurerm_mssql_managed_instance" "self" {
-  resource_group_name = azurerm_virtual_network.managed_instance.resource_group_name
-  location            = azurerm_virtual_network.managed_instance.location
+  resource_group_name = azurerm_virtual_network.main.resource_group_name
+  location            = azurerm_virtual_network.main.location
   tags                = merge(var.tags, {})
 
   name = "${var.resource_name_prefix}-mi"
