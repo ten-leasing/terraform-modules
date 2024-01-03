@@ -8,7 +8,7 @@ variable "hub_vnet_resource_group_name" {
   type = string
 }
 
-variable "hub_vnet_virtual_network_name" {
+variable "hub_vnet_name" {
   type = string
 }
 
@@ -19,7 +19,7 @@ data "azurerm_virtual_network" "reporting" {
 
 data "azurerm_virtual_network" "hub" {
   resource_group_name = var.hub_vnet_resource_group_name
-  name                = var.hub_vnet_virtual_network_name
+  name                = var.hub_vnet_name
 }
 
 module "hub_and_reporting_peering" {

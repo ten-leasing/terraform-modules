@@ -12,14 +12,22 @@ variable "global_vnet_address_space" {
   type = string
 }
 
+variable "hub_vnet_resource_group_name" {
+  type = string
+}
+
+variable "hub_vnet_name" {
+  type = string
+}
+
 data "azurerm_virtual_network" "hub" {
-  resource_group_name = "${var.resource_name_prefix}-hub"
-  name                = "${var.resource_name_prefix}-hub-vnet"
+  resource_group_name = var.hub_vnet_resource_group_name
+  name                = var.hub_vnet_name
 }
 
 resource "azurerm_virtual_network" "managed_instance" {
-  resource_group_name = azurerm_resource_group.data.name
-  location            = azurerm_resource_group.data.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name          = "${var.resource_name_prefix}-mi-vnet"

@@ -36,8 +36,8 @@ data "azuread_service_principal" "msgraph" {
 }
 
 resource "azurerm_user_assigned_identity" "managed_instance" {
-  resource_group_name = azurerm_resource_group.data.name
-  location            = azurerm_resource_group.data.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name = "${var.resource_name_prefix}-mi-identity"
