@@ -1,9 +1,8 @@
 locals {
-  managed_instance_vnet_new_bits = 3
-  vnet_address_space             = [cidrsubnet(var.global_vnet_address_space, 8, var.managed_instance_vnet_id)]
+  vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, var.vnet_id)]
 }
 
-variable "managed_instance_vnet_id" {
+variable "vnet_id" {
   type = number
 }
 
