@@ -2,6 +2,10 @@ variable "vnet_address_space" {
   type = list(string)
 }
 
+variable "power_bi_data_gateway_subnet_address_prefixes" {
+  type = list(string)
+}
+
 resource "azurerm_virtual_network" "main" {
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -26,5 +30,8 @@ resource "azurerm_subnet" "power_bi_data_gateway" {
     }
   }
 
-  address_prefixes = [cidrsubnet(azurerm_virtual_network.main.address_space[0], 4, 0)]
+  # FIXME Only need around 8 - 16 IPs
+  # Or better yet, just like we did with the hub gateway subnet address prefix,
+  # pass it in as a variable
+  address_prefixes = var.power_bi_data_gateway_subnet_address_prefixes
 }
