@@ -1,11 +1,9 @@
 locals {
-  app_vnet_address_space = [
-    cidrsubnet(
-      data.terraform_remote_state.global.outputs.vnet_global_address_space,
-      8,
-      random_integer.random_vnet_id.result
-    )
-  ]
+  app_vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, random_integer.random_vnet_id.result)]
+}
+
+variable "global_vnet_address_space" {
+  type = string
 }
 
 resource "random_integer" "random_vnet_id" {

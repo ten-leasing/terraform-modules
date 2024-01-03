@@ -1,11 +1,15 @@
 locals {
   managed_instance_vnet_new_bits         = 3
-  managed_instance_overall_address_range = cidrsubnet(data.terraform_remote_state.global.outputs.vnet_global_address_space, 8, 1)
+  managed_instance_overall_address_range = cidrsubnet(var.global_vnet_address_space, 8, 1)
   vnet_address_space = [cidrsubnet(
     local.managed_instance_overall_address_range,
     local.managed_instance_vnet_new_bits,
     0,
   )]
+}
+
+variable "global_vnet_address_space" {
+  type = string
 }
 
 output "managed_instance_overall_address_range" {

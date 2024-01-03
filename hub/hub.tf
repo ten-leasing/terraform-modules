@@ -1,10 +1,11 @@
 locals {
   hub_vnet_reserved_subnet_size = 24
-  hub_vnet_subnet_newbits       = local.hub_vnet_reserved_subnet_size - data.terraform_remote_state.global.outputs.vnet_global_address_size
-  hub_address_space = cidrsubnets(
-    data.terraform_remote_state.global.outputs.vnet_global_address_space,
-    local.hub_vnet_subnet_newbits,
-  )
+  hub_vnet_subnet_newbits       = local.hub_vnet_reserved_subnet_size - var.global_vnet_address_space
+  hub_address_space             = cidrsubnets(var.global_vnet_address_space, local.hub_vnet_subnet_newbits)
+}
+
+variable "global_vnet_address_space" {
+  type = string
 }
 
 resource "azurerm_virtual_network" "hub" {

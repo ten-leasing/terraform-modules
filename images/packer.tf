@@ -1,5 +1,9 @@
 locals {
-  packer_vnet_address_space = [cidrsubnet(data.terraform_remote_state.global.outputs.vnet_global_address_space, 8, 6)]
+  packer_vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, 6)]
+}
+
+variable "global_vnet_address_space" {
+  type = string
 }
 
 data "azurerm_client_config" "current" {}
