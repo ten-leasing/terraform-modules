@@ -1,11 +1,4 @@
 locals {
-  power_bi_overall_address_range = [cidrsubnet(var.global_vnet_address_space, 8, var.power_bi_vnet_id)]
-  logins                         = { "powerbi.reporting@starleasing.com" : "public" }
-}
-
-variable "power_bi_vnet_id" {
-  type    = number
-  default = 5
 }
 
 variable "global_vnet_address_space" {
@@ -13,8 +6,7 @@ variable "global_vnet_address_space" {
 }
 
 variable "vnet_address_space" {
-  type    = number
-  default = 5
+  type = list(string)
 }
 
 variable "managed_instance_resource_group_name" {
@@ -28,16 +20,6 @@ variable "managed_instance_name" {
 data "azurerm_mssql_managed_instance" "main" {
   resource_group_name = var.managed_instance_resource_group_name
   name                = var.managed_instance_name
-}
-
-resource "azurerm_virtual_network" "main" {
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  tags                = merge(var.tags, {})
-
-  name = "${var.resource_name_prefix}-reporting-vnet"
-
-  address_space = local.power_bi_overall_address_range
 }
 
 resource "azurerm_subnet" "power_bi" {
@@ -91,25 +73,4 @@ module "power_bi_and_data_peering" {
   vnet2_address_space                 = data.azurerm_virtual_network.managed_instance.address_space
   vnet2_allow_vnet1_forwarded_traffic = false
   vnet2_use_vnet1_remote_gateway      = false
-}
-
-resource "null_resource" "server_login" {
-  for_each = local.logins
-
-  triggers = {
-    id          = data.azurerm_mssql_managed_instance.main.id
-    logins      = sha1(jsonencode(local.logins))
-    force_rerun = 3
-  }
-
-  provisioner "local-exec" {
-    command = join(" ", [
-      "sqlcmd -G -h -1 -b -Q",
-      "\"exec sp_create_login",
-      "@user = '${each.key}', @role = '${each.value}';\"",
-    ])
-    environment = {
-      SQLCMDSERVER = "${data.azurerm_mssql_managed_instance.main.fqdn}"
-    }
-  }
 }
