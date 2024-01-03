@@ -4,14 +4,22 @@ locals {
   reporting_resource_group_name   = "DevOps_Reporting_Portal"
 }
 
+variable "hub_vnet_resource_group_name" {
+  type = string
+}
+
+variable "hub_vnet_virtual_network_name" {
+  type = string
+}
+
 data "azurerm_virtual_network" "reporting" {
   resource_group_name = local.reporting_resource_group_name
   name                = local.reporting_vnet_name
 }
 
 data "azurerm_virtual_network" "hub" {
-  resource_group_name = "${var.resource_name_prefix}-hub"
-  name                = "${var.resource_name_prefix}-hub-vnet"
+  resource_group_name = var.hub_vnet_resource_group_name
+  name                = var.hub_vnet_virtual_network_name
 }
 
 module "hub_and_reporting_peering" {
