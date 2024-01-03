@@ -18,9 +18,12 @@ variable "hub_vnet_name" {
   type = string
 }
 
-data "azurerm_virtual_network" "hub" {
-  resource_group_name = var.hub_vnet_resource_group_name
-  name                = var.hub_vnet_name
+variable "hub_vnet_id" {
+  type = string
+}
+
+variable "hub_vnet_address_space" {
+  type = list(string)
 }
 
 resource "azurerm_virtual_network" "managed_instance" {
@@ -47,10 +50,10 @@ output "vnet_address_space" {
 module "hub_and_data_peering" {
   source = "git::https://star-leasing@dev.azure.com/star-leasing/Architecture/_git/terraform-library//azure-vnet-peerings?ref=default"
 
-  vnet1_resource_group_name = data.azurerm_virtual_network.hub.resource_group_name
-  vnet1_name                = data.azurerm_virtual_network.hub.name
-  vnet1_id                  = data.azurerm_virtual_network.hub.id
-  vnet1_address_space       = data.azurerm_virtual_network.hub.address_space
+  vnet1_resource_group_name = var.hub_vnet_resource_group_name
+  vnet1_name                = var.hub_vnet_name
+  vnet1_id                  = var.hub_vnet_id
+  vnet1_address_space       = var.hub_vnet_address_space
 
   vnet2_resource_group_name = azurerm_virtual_network.managed_instance.resource_group_name
   vnet2_name                = azurerm_virtual_network.managed_instance.name
