@@ -1,6 +1,11 @@
 locals {
-  power_bi_overall_address_range = [cidrsubnet(var.global_vnet_address_space, 8, 5)]
+  power_bi_overall_address_range = [cidrsubnet(var.global_vnet_address_space, 8, var.power_bi_vnet_id)]
   logins                         = { "powerbi.reporting@starleasing.com" : "public" }
+}
+
+variable "power_bi_vnet_id" {
+  type    = number
+  default = 5
 }
 
 variable "global_vnet_address_space" {

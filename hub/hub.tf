@@ -1,7 +1,12 @@
 locals {
   hub_vnet_reserved_subnet_size = 24
   hub_vnet_subnet_newbits       = local.hub_vnet_reserved_subnet_size - var.global_vnet_address_space
-  hub_address_space             = cidrsubnets(var.global_vnet_address_space, local.hub_vnet_subnet_newbits)
+  hub_address_space             = [cidrsubnet(var.global_vnet_address_space, local.hub_vnet_subnet_newbits, var.hub_vnet_id)]
+}
+
+variable "hub_vnet_id" {
+  type    = number
+  default = 0
 }
 
 variable "global_vnet_address_space" {

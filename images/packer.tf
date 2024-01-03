@@ -1,5 +1,10 @@
 locals {
-  packer_vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, 6)]
+  packer_vnet_address_space = [cidrsubnet(var.global_vnet_address_space, 8, var.packer_vnet_id)]
+}
+
+variable "packer_vnet_id" {
+  type    = number
+  default = 6
 }
 
 variable "global_vnet_address_space" {

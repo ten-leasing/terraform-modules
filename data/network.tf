@@ -1,19 +1,15 @@
 locals {
-  managed_instance_vnet_new_bits         = 3
-  managed_instance_overall_address_range = cidrsubnet(var.global_vnet_address_space, 8, 1)
-  vnet_address_space = [cidrsubnet(
-    local.managed_instance_overall_address_range,
-    local.managed_instance_vnet_new_bits,
-    0,
-  )]
+  managed_instance_vnet_new_bits = 3
+  vnet_address_space             = [cidrsubnet(var.global_vnet_address_space, 8, var.managed_instance_vnet_id)]
+}
+
+variable "managed_instance_vnet_id" {
+  type    = number
+  default = 1
 }
 
 variable "global_vnet_address_space" {
   type = string
-}
-
-output "managed_instance_overall_address_range" {
-  value = local.managed_instance_overall_address_range
 }
 
 data "azurerm_virtual_network" "hub" {
