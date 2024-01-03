@@ -11,28 +11,24 @@ locals {
 }
 
 variable "storage_account_type" {
-  type    = string
-  default = "LRS"
+  type = string
 }
 
 variable "service_tier" {
-  type    = string
-  default = "General Purpose"
+  type = string
 }
 
 variable "hardware_generation" {
-  type    = string
-  default = "Standard"
+  type = string
 }
 
 variable "v_cores" {
-  type    = number
-  default = 4
+  type = number
 }
 
 variable "expose_to_public" {
   type    = bool
-  default = true # This should be set to false in near future
+  default = false
 }
 
 resource "azurerm_mssql_managed_instance" "self" {

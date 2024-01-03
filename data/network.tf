@@ -4,8 +4,7 @@ locals {
 }
 
 variable "managed_instance_vnet_id" {
-  type    = number
-  default = 1
+  type = number
 }
 
 variable "global_vnet_address_space" {
