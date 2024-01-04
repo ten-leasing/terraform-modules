@@ -7,8 +7,7 @@ variable "logins" {
 }
 
 resource "null_resource" "server_login" {
-  depends_on = [module.hub_and_data_peering]
-  for_each   = var.logins
+  for_each = var.logins
 
   triggers = {
     id          = azurerm_mssql_managed_instance.self.id
