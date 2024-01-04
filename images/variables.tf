@@ -22,3 +22,19 @@ variable "tags" {
   description = "Tags to apply to all resources"
   type        = map(any)
 }
+
+variable "vnet_id" {
+  type = string
+}
+
+variable "vnet_resource_group_name" {
+  type = string
+}
+
+variable "vnet_name" {
+  type = string
+}
+
+variable "vnet_address_space" {
+  type = list(string)
+}

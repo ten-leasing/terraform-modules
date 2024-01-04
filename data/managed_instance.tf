@@ -35,7 +35,7 @@ variable "expose_to_public" {
 
 resource "azurerm_subnet" "managed_instance" {
   resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.main.name
+  virtual_network_name = var.vnet_name
   name                 = "ManagedInstance"
   address_prefixes     = [local.managed_instance_subnet]
 
@@ -57,8 +57,8 @@ output "subnet_address_prefixes" {
 }
 
 resource "azurerm_mssql_managed_instance" "self" {
-  resource_group_name = azurerm_virtual_network.main.resource_group_name
-  location            = azurerm_virtual_network.main.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name = "${var.resource_name_prefix}-mi"

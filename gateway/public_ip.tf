@@ -8,14 +8,14 @@ resource "azurerm_public_ip" "gateway" {
   domain_name_label   = "${var.resource_name_prefix}-gw"
 }
 
-output "gateway_public_ip_domain_name" {
+output "public_ip_domain_name" {
   value = azurerm_public_ip.gateway.domain_name_label
 }
 
-output "gateway_public_ip_id" {
+output "public_ip_id" {
   value = azurerm_public_ip.gateway.id
 }
 
-output "gateway_public_ip" {
+output "public_ip" {
   value = azurerm_public_ip.gateway.ip_address
 }

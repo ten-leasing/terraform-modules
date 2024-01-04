@@ -13,8 +13,8 @@ variable "vpn_appliance_address" {
 }
 
 resource "azurerm_local_network_gateway" "internal" {
-  resource_group_name = azurerm_virtual_network.main.resource_group_name
-  location            = azurerm_virtual_network.main.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name            = "${var.resource_name_prefix}-internal-lgw"
@@ -23,8 +23,8 @@ resource "azurerm_local_network_gateway" "internal" {
 }
 
 resource "azurerm_virtual_network_gateway_connection" "internal" {
-  resource_group_name        = azurerm_local_network_gateway.internal.resource_group_name
-  location                   = azurerm_local_network_gateway.internal.location
+  resource_group_name        = var.resource_group_name
+  location                   = var.location
   virtual_network_gateway_id = azurerm_virtual_network_gateway.internal.id
   local_network_gateway_id   = azurerm_local_network_gateway.internal.id
 
@@ -45,9 +45,4 @@ resource "azurerm_virtual_network_gateway_connection" "internal" {
     sa_datasize      = 102400000
     sa_lifetime      = 27000
   }
-}
-
-output "reporting_connection_key" {
-  sensitive = true
-  value     = var.vpn_appliance_pre_shared_key
 }
