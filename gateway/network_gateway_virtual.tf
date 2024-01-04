@@ -23,10 +23,6 @@ resource "azurerm_subnet" "gateway" {
   address_prefixes     = var.subnet_address_prefixes
 }
 
-output "subnet_address_prefixes" {
-  value = azurerm_subnet.gateway.address_prefixes
-}
-
 resource "azurerm_virtual_network_gateway" "internal" {
   resource_group_name = var.resource_group_name
   location            = var.location

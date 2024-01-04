@@ -54,10 +54,6 @@ resource "azurerm_subnet" "managed_instance" {
   }
 }
 
-output "subnet_address_prefixes" {
-  value = azurerm_subnet.managed_instance.address_prefixes
-}
-
 resource "azurerm_mssql_managed_instance" "self" {
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -84,10 +80,6 @@ resource "azurerm_mssql_managed_instance" "self" {
 
 output "managed_instance_name" {
   value = azurerm_mssql_managed_instance.self.name
-}
-
-output "resource_group_name" {
-  value = azurerm_mssql_managed_instance.self.resource_group_name
 }
 
 output "fqdn" {
