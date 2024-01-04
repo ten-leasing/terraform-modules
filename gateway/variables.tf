@@ -5,10 +5,6 @@ variable "resource_group_name" {
   type = string
 }
 
-output "resource_group_name" {
-  value = var.resource_group_name
-}
-
 variable "location" {
   type = string
 }
@@ -23,18 +19,6 @@ variable "tags" {
   type        = map(any)
 }
 
-variable "vnet_id" {
-  type = string
-}
-
-variable "vnet_resource_group_name" {
-  type = string
-}
-
 variable "vnet_name" {
   type = string
-}
-
-variable "vnet_address_space" {
-  type = list(string)
 }

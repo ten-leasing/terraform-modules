@@ -25,14 +25,8 @@ output "admin_password" {
 
 data "azurerm_client_config" "current" {}
 
-data "azuread_group" "devops_admin" {
+data "azuread_group" "instance_admin" {
   display_name = var.server_admin_group_display_name
-}
-
-data "azuread_application_published_app_ids" "ids" {}
-
-data "azuread_service_principal" "msgraph" {
-  client_id = data.azuread_application_published_app_ids.ids.result.MicrosoftGraph
 }
 
 resource "azurerm_user_assigned_identity" "managed_instance" {
@@ -59,6 +53,6 @@ resource "azurerm_mssql_managed_instance_active_directory_administrator" "admin"
 
   azuread_authentication_only = true
 
-  object_id      = data.azuread_group.devops_admin.object_id
-  login_username = data.azuread_group.devops_admin.display_name
+  object_id      = data.azuread_group.instance_admin.object_id
+  login_username = data.azuread_group.instance_admin.display_name
 }

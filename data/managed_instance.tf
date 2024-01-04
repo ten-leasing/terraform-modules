@@ -1,6 +1,4 @@
 locals {
-  managed_instance_subnet = cidrsubnet(one(azurerm_virtual_network.main.address_space), 0, 0)
-
   service_tiers = {
     "General Purpose" : "GP",
     "Business Critical" : "BC",
@@ -33,11 +31,15 @@ variable "expose_to_public" {
   default = false
 }
 
+variable "subnet_address_prefixes" {
+  type = list(string)
+}
+
 resource "azurerm_subnet" "managed_instance" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.vnet_name
   name                 = "ManagedInstance"
-  address_prefixes     = [local.managed_instance_subnet]
+  address_prefixes     = var.subnet_address_prefixes
 
   delegation {
     name = "managed_instance"
