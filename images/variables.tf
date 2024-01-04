@@ -1,6 +1,18 @@
 locals {
 }
 
+variable "resource_group_name" {
+  type = string
+}
+
+output "resource_group_name" {
+  value = var.resource_group_name
+}
+
+variable "location" {
+  type = string
+}
+
 variable "resource_name_prefix" {
   description = "Name prefix for all resources"
   type        = string

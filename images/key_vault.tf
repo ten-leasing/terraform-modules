@@ -2,8 +2,8 @@ data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "packer" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  resource_group_name = azurerm_resource_group.images.name
-  location            = azurerm_resource_group.images.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = merge(var.tags, {})
 
   name                          = "${var.resource_name_prefix}-kv"
