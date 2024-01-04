@@ -3,8 +3,8 @@ variable "vnet_address_space" {
 }
 
 resource "azurerm_virtual_network" "main" {
-  resource_group_name = azurerm_resource_group.images.name
-  location            = azurerm_resource_group.images.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   name                = "${var.resource_name_prefix}-image-vnet"
   tags                = merge(var.tags, {})
 
