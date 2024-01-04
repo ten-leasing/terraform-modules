@@ -1,3 +1,8 @@
+variable "expose_domain_name_label" {
+  type    = bool
+  default = true
+}
+
 resource "azurerm_public_ip" "gateway" {
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -5,7 +10,7 @@ resource "azurerm_public_ip" "gateway" {
   tags                = merge(var.tags, {})
   allocation_method   = "Static"
   sku                 = "Standard"
-  domain_name_label   = "${var.resource_name_prefix}-gw"
+  domain_name_label   = var.expose_domain_name_label ? "${var.resource_name_prefix}-gw" : null
 }
 
 output "public_ip_domain_name" {
