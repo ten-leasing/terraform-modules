@@ -9,7 +9,8 @@ locals {
 }
 
 variable "git_remote_urls" {
-  type = list(object({ name = string, url = string }))
+  type    = list(object({ name = string, url = string }))
+  default = []
 }
 
 output "remotes" {
