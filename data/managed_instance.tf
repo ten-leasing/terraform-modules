@@ -55,6 +55,10 @@ resource "azurerm_subnet" "managed_instance" {
 }
 
 resource "azurerm_mssql_managed_instance" "self" {
+  depends_on = [
+    azurerm_subnet_network_security_group_association.managed_instance,
+    azurerm_subnet_network_security_group_association.managed_instance,
+  ]
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = merge(var.tags, {})
