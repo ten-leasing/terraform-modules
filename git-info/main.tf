@@ -1,16 +1,21 @@
 locals {
-  git_config_path    = "${path.cwd}/.git/config"
-  git_config_content = fileexists(local.git_config_path) ? file("${local.git_config_path}") : ""
+  git_config_path    = "${var.git_dir == "" ? path.root : var.git_dir}/.git/config"
+  git_config_content = file("${local.git_config_path}")
 
-  remotes = flatten(concat(
-    regexall("\\[remote (?:\"(?P<name>.*)\"\\]\\n.*url.*=.*(?P<url>https.*))", local.git_config_content),
-    var.git_remote_urls
-  ))
+  remotes = regexall("\\[remote (?:\"(?P<name>.*)\"\\]\\n.*url.*=.*(?P<url>https.*))", local.git_config_content)
 }
 
-variable "git_remote_urls" {
-  type    = list(object({ name = string, url = string }))
-  default = []
+variable "git_dir" {
+  type    = string
+  default = ""
+}
+
+output "git_config_path" {
+  value = local.git_config_path
+}
+
+output "git_config_content" {
+  value = local.git_config_content
 }
 
 output "remotes" {

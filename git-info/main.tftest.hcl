@@ -1,8 +1,12 @@
 run "can_parse_git_remotes" {
   command = plan
 
+  variables {
+    git_dir = "../"
+  }
+
   assert {
-    condition     = output.remotes.remote == "https://example.com/repo"
+    condition     = length(output.remotes) > 1
     error_message = "remotes output not as expected"
   }
 }
