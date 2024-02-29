@@ -1,23 +1,11 @@
-variable "vnet1_subscription_id" {
-  type      = string
-  sensitive = true
-}
-
-provider "azurerm" {
-  alias           = "vnet1_provider"
-  subscription_id = var.vnet1_subscription_id
-  features {}
-}
-
-variable "vnet2_subscription_id" {
-  type      = string
-  sensitive = true
-}
-
-provider "azurerm" {
-  alias           = "vnet2_provider"
-  subscription_id = var.vnet2_subscription_id
-  features {}
+terraform {
+  required_providers {
+    azurerm = {
+      source                = "hashicorp/azurerm"
+      version               = "< 4"
+      configuration_aliases = [azurerm.vnet1_provider, azurerm.vnet2_provider]
+    }
+  }
 }
 
 resource "azurerm_virtual_network_peering" "vnet1_to_vnet2" {
