@@ -1,5 +1,9 @@
 data "azurerm_subscription" "current" {}
 
+output "subscription_name" {
+  value = data.azurerm_subscription.current.display_name
+}
+
 data "azurerm_client_config" "current" {}
 
 data "azuread_directory_object" "current" {
