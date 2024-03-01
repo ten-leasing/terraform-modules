@@ -1,9 +1,13 @@
+variable "vm_name" {
+  type = string
+}
+
 variable "vm_size" {
   type    = string
   default = "Standard_B4ms"
 }
 
-variable "source_vault_id" {
+variable "key_vault_id" {
   type = string
 }
 
@@ -38,7 +42,7 @@ resource "azurerm_windows_virtual_machine" "emulator" {
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = merge(var.tags, {})
-  name                = "${var.resource_name_prefix}-vm"
+  name                = var.vm_name
 
   size                       = var.vm_size
   admin_username             = random_pet.admin_username.id
@@ -79,7 +83,7 @@ resource "azurerm_windows_virtual_machine" "emulator" {
   # }
 
   secret {
-    key_vault_id = var.source_vault_id
+    key_vault_id = var.key_vault_id
     certificate {
       url   = azurerm_key_vault_certificate.emulator.secret_id
       store = var.resource_name_prefix

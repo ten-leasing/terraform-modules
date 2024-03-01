@@ -6,7 +6,7 @@ variable "certificate_initial_validity_period_in_months" {
 # The ID of the Key Vault Secret. Stored secret is the Base64 encoding of a JSON Object that which is encoded in UTF-8
 # If your certificate is stored in Azure Key Vault - this can be sourced from the secret_id property on the azurerm_key_vault_certificate resource
 resource "azurerm_key_vault_certificate" "emulator" {
-  key_vault_id = var.source_vault_id
+  key_vault_id = var.key_vault_id
   name         = "${var.resource_name_prefix}-cert"
 
   certificate_policy {
