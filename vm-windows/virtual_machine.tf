@@ -39,6 +39,7 @@ output "vm_credentials" {
 }
 
 resource "azurerm_windows_virtual_machine" "emulator" {
+  provider            = azurerm.current
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = merge(var.tags, {})

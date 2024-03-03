@@ -6,6 +6,7 @@ variable "logins" {
 }
 
 resource "azurerm_role_assignment" "users" {
+  provider             = azurerm.current
   for_each             = var.logins.users
   principal_id         = each.value
   scope                = azurerm_windows_virtual_machine.emulator.id
@@ -13,6 +14,7 @@ resource "azurerm_role_assignment" "users" {
 }
 
 resource "azurerm_role_assignment" "admins" {
+  provider             = azurerm.current
   for_each             = var.logins.admins
   principal_id         = each.value
   scope                = azurerm_windows_virtual_machine.emulator.id
