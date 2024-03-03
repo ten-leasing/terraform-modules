@@ -38,7 +38,7 @@ output "vm_credentials" {
   }
 }
 
-resource "azurerm_windows_virtual_machine" "emulator" {
+resource "azurerm_windows_virtual_machine" "self" {
   provider            = azurerm.current
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -63,7 +63,7 @@ resource "azurerm_windows_virtual_machine" "emulator" {
 
   winrm_listener {
     protocol        = "Https"
-    certificate_url = azurerm_key_vault_certificate.emulator.secret_id
+    certificate_url = azurerm_key_vault_certificate.vm.secret_id
   }
 
   identity {
@@ -86,7 +86,7 @@ resource "azurerm_windows_virtual_machine" "emulator" {
   secret {
     key_vault_id = var.key_vault_id
     certificate {
-      url   = azurerm_key_vault_certificate.emulator.secret_id
+      url   = azurerm_key_vault_certificate.vm.secret_id
       store = var.resource_name_prefix
     }
   }
