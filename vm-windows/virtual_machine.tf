@@ -1,3 +1,8 @@
+variable "computer_name_prefix" {
+  type    = string
+  default = ""
+}
+
 variable "vm_name" {
   type = string
 }
@@ -26,7 +31,10 @@ variable "license_type" {
   default = "Windows_Server"
 }
 
-resource "random_pet" "computer_name" { length = 15 }
+resource "random_pet" "computer_name" {
+  length = 1
+  prefix = var.computer_name_prefix
+}
 
 resource "random_pet" "admin_username" { length = 1 }
 
