@@ -122,3 +122,7 @@ resource "azurerm_windows_virtual_machine" "self" {
     ultra_ssd_enabled = false
   }
 }
+
+output "vm_id" {
+  value = azurerm_windows_virtual_machine.self.id
+}
