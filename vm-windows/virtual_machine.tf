@@ -28,7 +28,7 @@ variable "timezone" {
 
 variable "license_type" {
   type    = string
-  default = "Windows_Server"
+  default = "None"
 }
 
 resource "random_pet" "computer_name" {
