@@ -1,6 +1,6 @@
 variable "computer_name_prefix" {
   type    = string
-  default = ""
+  default = "vm"
 }
 
 variable "vm_name" {
