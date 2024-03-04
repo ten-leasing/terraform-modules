@@ -26,7 +26,7 @@ variable "license_type" {
   default = "Windows_Server"
 }
 
-resource "random_pet" "computer_name" {}
+resource "random_pet" "computer_name" { length = 15 }
 
 resource "random_pet" "admin_username" { length = 1 }
 
