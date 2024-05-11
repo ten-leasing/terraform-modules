@@ -1,3 +1,11 @@
+locals {
+  computer_name = random_pet.computer_name.id
+}
+
+output "vm_name" {
+  value = local.computer_name
+}
+
 variable "computer_name_prefix" {
   type    = string
   default = "vm"
@@ -10,10 +18,6 @@ variable "vm_name" {
 variable "vm_size" {
   type    = string
   default = "Standard_B4ms"
-}
-
-variable "key_vault_id" {
-  type = string
 }
 
 variable "storage_disk_size" {
@@ -56,7 +60,7 @@ resource "azurerm_windows_virtual_machine" "self" {
   size                       = var.vm_size
   admin_username             = random_pet.admin_username.id
   admin_password             = random_password.admin_password.result
-  computer_name              = random_pet.computer_name.id
+  computer_name              = local.computer_name
   network_interface_ids      = [azurerm_network_interface.vm.id]
   allow_extension_operations = true
   enable_automatic_updates   = true
@@ -69,11 +73,6 @@ resource "azurerm_windows_virtual_machine" "self" {
   provision_vm_agent  = true
   license_type        = var.license_type
 
-  winrm_listener {
-    protocol        = "Https"
-    certificate_url = azurerm_key_vault_certificate.vm.secret_id
-  }
-
   identity {
     type = "SystemAssigned"
   }
@@ -84,26 +83,6 @@ resource "azurerm_windows_virtual_machine" "self" {
     sku       = "2022-datacenter-azure-edition-hotpatch-smalldisk"
     version   = "latest"
   }
-
-  # Disabling because boot_diagnostics is not compatible with our global storage account
-  # And we're not creating an entirely different storage account just for a VM
-  # boot_diagnostics {
-  #   storage_account_uri = null
-  # }
-
-  secret {
-    key_vault_id = var.key_vault_id
-    certificate {
-      url   = azurerm_key_vault_certificate.vm.secret_id
-      store = var.resource_name_prefix
-    }
-  }
-
-  # NOTE Not sure if needed - what would the content need to be?
-  # additional_unattend_config {
-  #   setting_name = "FirstLogonCommands" # Or 'AutoLogon'
-  #   content      = ""
-  # }
 
   os_disk {
     name                 = "${var.resource_name_prefix}-os-disk"
