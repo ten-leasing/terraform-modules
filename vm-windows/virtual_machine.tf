@@ -100,6 +100,10 @@ resource "azurerm_windows_virtual_machine" "self" {
   additional_capabilities {
     ultra_ssd_enabled = false
   }
+
+  lifecycle {
+    replace_triggered_by = [azurerm_network_interface.vm]
+  }
 }
 
 output "vm_id" {
