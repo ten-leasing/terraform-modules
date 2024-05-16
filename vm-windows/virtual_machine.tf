@@ -1,5 +1,11 @@
 locals {
-  computer_name = var.computer_name
+  admin_username = var.admin_username == null ? one(random_pet.admin_username).id : var.admin_username
+  computer_name  = var.computer_name
+}
+
+variable "admin_username" {
+  type    = string
+  default = null
 }
 
 variable "vm_name" {
@@ -13,6 +19,44 @@ variable "computer_name" {
 variable "vm_size" {
   type    = string
   default = "Standard_B4ms"
+}
+
+variable "enable_automatic_updates" {
+  type    = bool
+  default = true
+}
+
+variable "hotpatching_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "patch_assessment_mode" {
+  type    = string
+  default = "AutomaticByPlatform"
+  validation {
+    condition     = contains(["AutomaticByPlatform", "ImageDefault"], var.patch_assessment_mode)
+    error_message = "Possible values are 'AutomaticByPlatform' or 'ImageDefault'"
+  }
+}
+
+variable "patch_mode" {
+  type    = string
+  default = "AutomaticByPlatform"
+  validation {
+    condition     = contains(["Manual", "AutomaticByOS", "AutomaticByPlatform"], var.patch_mode)
+    error_message = "Possible values are 'Manual', 'AutomaticByOS' and 'AutomaticByPlatform'"
+  }
+}
+
+variable "reboot_setting" {
+  type     = string
+  nullable = true
+  default  = "IfRequired"
+  validation {
+    condition     = var.reboot_setting == null || contains(["Always", "IfRequired", "Never"], coalesce(var.reboot_setting, 0))
+    error_message = "Possible values are 'Always', 'IfRequired' and 'Never'"
+  }
 }
 
 variable "os_storage_disk_size" {
@@ -33,7 +77,10 @@ variable "os_storage_disk_account_type" {
   type    = string
   default = "Standard_LRS"
   validation {
-    condition     = contains(["None", "ReadOnly", "ReadWrite"], var.os_storage_disk_account_type)
+    condition = contains(
+      ["Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"],
+      var.os_storage_disk_account_type
+    )
     error_message = "Possible values are 'Standard_LRS', 'StandardSSD_LRS', 'Premium_LRS', 'StandardSSD_ZRS' and 'Premium_ZRS'"
   }
 }
@@ -63,13 +110,16 @@ variable "source_image_reference" {
   }
 }
 
-resource "random_pet" "admin_username" { length = 1 }
+resource "random_pet" "admin_username" {
+  count  = var.admin_username == null ? 1 : 0
+  length = 1
+}
 
 resource "random_password" "admin_password" { length = 16 }
 
 output "vm_credentials" {
   value = {
-    (random_pet.admin_username.id) : random_password.admin_password.result
+    (local.admin_username) : random_password.admin_password.result
   }
 }
 
@@ -81,21 +131,22 @@ resource "azurerm_windows_virtual_machine" "self" {
   name                = var.vm_name
 
   size                              = var.vm_size
-  admin_username                    = random_pet.admin_username.id
+  admin_username                    = local.admin_username
   admin_password                    = random_password.admin_password.result
-  computer_name                     = local.computer_name
+  computer_name                     = upper(local.computer_name)
   network_interface_ids             = [azurerm_network_interface.vm.id]
   allow_extension_operations        = true
-  enable_automatic_updates          = true
-  patch_mode                        = "AutomaticByPlatform"
-  reboot_setting                    = "IfRequired"
   timezone                          = var.timezone
   secure_boot_enabled               = false
   vtpm_enabled                      = false
   provision_vm_agent                = true
   vm_agent_platform_updates_enabled = true
   license_type                      = var.license_type
-  # hotpatching_enabled        = true
+  enable_automatic_updates          = var.enable_automatic_updates
+  patch_assessment_mode             = var.patch_assessment_mode
+  patch_mode                        = var.patch_mode
+  reboot_setting                    = var.reboot_setting
+  hotpatching_enabled               = var.hotpatching_enabled
 
   identity {
     type = "SystemAssigned"
