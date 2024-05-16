@@ -30,7 +30,7 @@ variable "os_storage_disk_caching" {
 }
 
 variable "os_storage_disk_account_type" {
-  type    = number
+  type    = string
   default = "Standard_LRS"
   validation {
     condition     = contains(["None", "ReadOnly", "ReadWrite"], var.os_storage_disk_account_type)
