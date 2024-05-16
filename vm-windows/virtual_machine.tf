@@ -35,6 +35,21 @@ variable "license_type" {
   default = "None"
 }
 
+variable "source_image_reference" {
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-datacenter-azure-edition-hotpatch-smalldisk"
+    version   = "latest"
+  }
+}
+
 resource "random_pet" "computer_name" {
   length = 1
   prefix = var.computer_name_prefix
@@ -64,24 +79,24 @@ resource "azurerm_windows_virtual_machine" "self" {
   network_interface_ids      = [azurerm_network_interface.vm.id]
   allow_extension_operations = true
   enable_automatic_updates   = true
+  patch_mode                 = "AutomaticByPlatform"
+  reboot_setting             = "IfRequired"
+  timezone                   = var.timezone
+  secure_boot_enabled        = false
+  vtpm_enabled               = false
+  provision_vm_agent         = true
+  license_type               = var.license_type
   # hotpatching_enabled        = true
-  patch_mode          = "AutomaticByPlatform"
-  reboot_setting      = "IfRequired"
-  timezone            = var.timezone
-  secure_boot_enabled = false
-  vtpm_enabled        = false
-  provision_vm_agent  = true
-  license_type        = var.license_type
 
   identity {
     type = "SystemAssigned"
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2022-datacenter-azure-edition-hotpatch-smalldisk"
-    version   = "latest"
+    publisher = var.source_image_reference.publisher
+    offer     = var.source_image_reference.offer
+    sku       = var.source_image_reference.sku
+    version   = var.source_image_reference.version
   }
 
   os_disk {
