@@ -1,17 +1,12 @@
 locals {
-  computer_name = random_pet.computer_name.id
-}
-
-output "vm_name" {
-  value = local.computer_name
-}
-
-variable "computer_name_prefix" {
-  type    = string
-  default = "vm"
+  computer_name = var.computer_name
 }
 
 variable "vm_name" {
+  type = string
+}
+
+variable "computer_name" {
   type = string
 }
 
@@ -20,9 +15,27 @@ variable "vm_size" {
   default = "Standard_B4ms"
 }
 
-variable "storage_disk_size" {
+variable "os_storage_disk_size" {
   type    = number
   default = 32
+}
+
+variable "os_storage_disk_caching" {
+  type    = string
+  default = "ReadOnly"
+  validation {
+    condition     = contains(["None", "ReadOnly", "ReadWrite"], var.os_storage_disk_caching)
+    error_message = "Possible values are 'None', 'ReadOnly', and 'ReadWrite'"
+  }
+}
+
+variable "os_storage_disk_account_type" {
+  type    = number
+  default = "Standard_LRS"
+  validation {
+    condition     = contains(["None", "ReadOnly", "ReadWrite"], var.os_storage_disk_account_type)
+    error_message = "Possible values are 'Standard_LRS', 'StandardSSD_LRS', 'Premium_LRS', 'StandardSSD_ZRS' and 'Premium_ZRS'"
+  }
 }
 
 variable "timezone" {
@@ -50,11 +63,6 @@ variable "source_image_reference" {
   }
 }
 
-resource "random_pet" "computer_name" {
-  length = 1
-  prefix = var.computer_name_prefix
-}
-
 resource "random_pet" "admin_username" { length = 1 }
 
 resource "random_password" "admin_password" { length = 16 }
@@ -72,20 +80,21 @@ resource "azurerm_windows_virtual_machine" "self" {
   tags                = merge(var.tags, {})
   name                = var.vm_name
 
-  size                       = var.vm_size
-  admin_username             = random_pet.admin_username.id
-  admin_password             = random_password.admin_password.result
-  computer_name              = local.computer_name
-  network_interface_ids      = [azurerm_network_interface.vm.id]
-  allow_extension_operations = true
-  enable_automatic_updates   = true
-  patch_mode                 = "AutomaticByPlatform"
-  reboot_setting             = "IfRequired"
-  timezone                   = var.timezone
-  secure_boot_enabled        = false
-  vtpm_enabled               = false
-  provision_vm_agent         = true
-  license_type               = var.license_type
+  size                              = var.vm_size
+  admin_username                    = random_pet.admin_username.id
+  admin_password                    = random_password.admin_password.result
+  computer_name                     = local.computer_name
+  network_interface_ids             = [azurerm_network_interface.vm.id]
+  allow_extension_operations        = true
+  enable_automatic_updates          = true
+  patch_mode                        = "AutomaticByPlatform"
+  reboot_setting                    = "IfRequired"
+  timezone                          = var.timezone
+  secure_boot_enabled               = false
+  vtpm_enabled                      = false
+  provision_vm_agent                = true
+  vm_agent_platform_updates_enabled = true
+  license_type                      = var.license_type
   # hotpatching_enabled        = true
 
   identity {
@@ -100,16 +109,16 @@ resource "azurerm_windows_virtual_machine" "self" {
   }
 
   os_disk {
-    name                 = "${var.resource_name_prefix}-os-disk"
-    caching              = "ReadOnly"
-    storage_account_type = "Standard_LRS"
+    name                 = "${local.computer_name}-os-disk"
+    caching              = var.os_storage_disk_caching
+    storage_account_type = var.os_storage_disk_account_type
+    disk_size_gb         = var.os_storage_disk_size
 
-    diff_disk_settings {
-      option    = "Local"
-      placement = "ResourceDisk"
-    }
-
-    disk_size_gb = var.storage_disk_size
+    # Likely won't use VM Sizes that include support for ephemeral disks
+    # diff_disk_settings {
+    #   option    = "Local"
+    #   placement = "ResourceDisk"
+    # }
   }
 
   additional_capabilities {
@@ -123,4 +132,16 @@ resource "azurerm_windows_virtual_machine" "self" {
 
 output "vm_id" {
   value = azurerm_windows_virtual_machine.self.id
+}
+
+output "vm_name" {
+  value = azurerm_windows_virtual_machine.self.name
+}
+
+output "computer_name" {
+  value = azurerm_windows_virtual_machine.self.computer_name
+}
+
+output "vm_private_ip_addresses" {
+  value = azurerm_windows_virtual_machine.self.private_ip_addresses
 }
