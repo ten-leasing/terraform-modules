@@ -21,6 +21,23 @@ variable "vm_size" {
   default = "Standard_B4ms"
 }
 
+variable "custom_data" {
+  type     = string
+  nullable = true
+  default  = null
+}
+
+variable "user_data" {
+  type     = string
+  nullable = true
+  default  = null
+}
+
+variable "ultra_ssd_enabled" {
+  type    = bool
+  default = false
+}
+
 variable "enable_automatic_updates" {
   type    = bool
   default = true
@@ -133,6 +150,8 @@ resource "azurerm_windows_virtual_machine" "self" {
   size                              = var.vm_size
   admin_username                    = local.admin_username
   admin_password                    = random_password.admin_password.result
+  custom_data                       = var.custom_data
+  user_data                         = var.user_data
   computer_name                     = upper(local.computer_name)
   network_interface_ids             = [azurerm_network_interface.vm.id]
   allow_extension_operations        = true
@@ -173,7 +192,7 @@ resource "azurerm_windows_virtual_machine" "self" {
   }
 
   additional_capabilities {
-    ultra_ssd_enabled = false
+    ultra_ssd_enabled = var.ultra_ssd_enabled
   }
 
   lifecycle {
