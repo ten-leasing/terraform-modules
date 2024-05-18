@@ -12,13 +12,19 @@ variable "vm_name" {
   type = string
 }
 
-variable "computer_name" {
-  type = string
-}
-
 variable "vm_size" {
   type    = string
   default = "Standard_B4ms"
+}
+
+variable "availability_zone" {
+  type     = string
+  nullable = true
+  default  = null
+}
+
+variable "computer_name" {
+  type = string
 }
 
 variable "custom_data" {
@@ -31,6 +37,11 @@ variable "user_data" {
   type     = string
   nullable = true
   default  = null
+}
+
+variable "encryption_at_host_enabled" {
+  type    = bool
+  default = false
 }
 
 variable "ultra_ssd_enabled" {
@@ -73,6 +84,16 @@ variable "reboot_setting" {
   validation {
     condition     = var.reboot_setting == null || contains(["Always", "IfRequired", "Never"], coalesce(var.reboot_setting, 0))
     error_message = "Possible values are 'Always', 'IfRequired' and 'Never'"
+  }
+}
+
+variable "disk_controller_type" {
+  type     = string
+  nullable = true
+  default  = null
+  validation {
+    condition     = var.disk_controller_type == null || contains(["SCSI", "NVMe"], coalesce(var.disk_controller_type, 0))
+    error_message = "Possible values are 'SCSI' or 'NVMe'"
   }
 }
 
@@ -134,11 +155,7 @@ resource "random_pet" "admin_username" {
 
 resource "random_password" "admin_password" { length = 16 }
 
-output "vm_credentials" {
-  value = {
-    (local.admin_username) : random_password.admin_password.result
-  }
-}
+output "vm_credentials" { value = { (local.admin_username) : random_password.admin_password.result } }
 
 resource "azurerm_windows_virtual_machine" "self" {
   provider            = azurerm.current
@@ -166,6 +183,9 @@ resource "azurerm_windows_virtual_machine" "self" {
   patch_mode                        = var.patch_mode
   reboot_setting                    = var.reboot_setting
   hotpatching_enabled               = var.hotpatching_enabled
+  zone                              = var.availability_zone
+  encryption_at_host_enabled        = var.encryption_at_host_enabled
+  disk_controller_type              = var.disk_controller_type
 
   identity {
     type = "SystemAssigned"

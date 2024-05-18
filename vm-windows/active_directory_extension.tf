@@ -1,8 +1,14 @@
+variable "enable_aad_extension" {
+  type    = bool
+  default = true
+}
+
 variable "type_handler_version" {
   type = string
 }
 
 resource "azurerm_virtual_machine_extension" "aad_login" {
+  count                      = var.enable_aad_extension ? 1 : 0
   provider                   = azurerm.current
   name                       = "AADLogin"
   tags                       = merge(var.tags, {})
