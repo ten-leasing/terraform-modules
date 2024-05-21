@@ -1,3 +1,11 @@
+locals {
+  virtual_network_resource_group_name = var.virtual_network_resource_group_name == null ? var.resource_group_name : var.virtual_network_resource_group_name
+}
+
+variable "virtual_network_resource_group_name" {
+  type = string
+}
+
 variable "virtual_network_name" {
   type = string
 }
