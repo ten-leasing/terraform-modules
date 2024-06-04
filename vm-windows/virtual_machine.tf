@@ -228,6 +228,10 @@ output "vm_name" {
   value = azurerm_windows_virtual_machine.self.name
 }
 
+output "vm_system_assigned_identity_principal_id" {
+  value = one(azurerm_windows_virtual_machine.self.identity).principal_id
+}
+
 output "computer_name" {
   value = azurerm_windows_virtual_machine.self.computer_name
 }
