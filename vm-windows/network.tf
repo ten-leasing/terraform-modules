@@ -2,16 +2,12 @@ locals {
   virtual_network_resource_group_name = var.virtual_network_resource_group_name == null ? var.resource_group_name : var.virtual_network_resource_group_name
 }
 
-variable "virtual_network_resource_group_name" {
-  type = string
-}
-
-variable "virtual_network_name" {
-  type = string
-}
-
-variable "subnet_address_prefixes" {
-  type = list(string)
+variable "virtual_network_resource_group_name" { type = string }
+variable "virtual_network_name" { type = string }
+variable "subnet_address_prefixes" { type = list(string) }
+variable "subnet_private_endpoint_network_policies_enabled" {
+  type    = bool
+  default = true
 }
 
 resource "azurerm_subnet" "vm" {
@@ -20,9 +16,13 @@ resource "azurerm_subnet" "vm" {
   virtual_network_name = var.virtual_network_name
   name                 = local.computer_name
 
-  address_prefixes  = var.subnet_address_prefixes
-  service_endpoints = ["Microsoft.AzureActiveDirectory"]
+  address_prefixes                              = var.subnet_address_prefixes
+  service_endpoints                             = ["Microsoft.AzureActiveDirectory"]
+  private_endpoint_network_policies             = var.subnet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled"
+  private_link_service_network_policies_enabled = var.subnet_private_endpoint_network_policies_enabled
 }
+
+output "subnet" { value = azurerm_subnet.vm }
 
 resource "azurerm_network_interface" "vm" {
   provider            = azurerm.current
