@@ -18,6 +18,7 @@ resource "azurerm_subnet" "vm" {
 
   address_prefixes                              = var.subnet_address_prefixes
   service_endpoints                             = ["Microsoft.AzureActiveDirectory"]
+  service_endpoint_policy_ids                   = []
   private_endpoint_network_policies             = var.subnet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled"
   private_link_service_network_policies_enabled = var.subnet_private_endpoint_network_policies_enabled
 }

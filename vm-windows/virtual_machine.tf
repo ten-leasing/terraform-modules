@@ -187,7 +187,8 @@ resource "azurerm_windows_virtual_machine" "self" {
   disk_controller_type              = var.disk_controller_type
 
   identity {
-    type = "SystemAssigned"
+    type         = "SystemAssigned"
+    identity_ids = []
   }
 
   source_image_reference {
