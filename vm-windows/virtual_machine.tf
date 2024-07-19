@@ -1,6 +1,5 @@
 locals {
   admin_username = var.admin_username == null ? one(random_pet.admin_username).id : var.admin_username
-  computer_name  = var.computer_name
 }
 
 variable "admin_username" {
@@ -169,7 +168,7 @@ resource "azurerm_windows_virtual_machine" "self" {
   admin_password                    = random_password.admin_password.result
   custom_data                       = var.custom_data
   user_data                         = var.user_data
-  computer_name                     = upper(local.computer_name)
+  computer_name                     = upper(var.computer_name)
   network_interface_ids             = [azurerm_network_interface.vm.id]
   allow_extension_operations        = true
   timezone                          = var.timezone
@@ -199,7 +198,7 @@ resource "azurerm_windows_virtual_machine" "self" {
   }
 
   os_disk {
-    name                 = "${local.computer_name}-os-disk"
+    name                 = "${var.vm_name}-os-disk"
     caching              = var.os_storage_disk_caching
     storage_account_type = var.os_storage_disk_account_type
     disk_size_gb         = var.os_storage_disk_size
