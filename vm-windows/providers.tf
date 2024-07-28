@@ -8,10 +8,5 @@ terraform {
   }
 }
 
-data "azurerm_subscription" "current" {
-  provider = azurerm.current
-}
-
-output "subscription_name" {
-  value = data.azurerm_subscription.current.display_name
-}
+data "azurerm_subscription" "current" { provider = azurerm.current }
+output "subscription_name" { value = data.azurerm_subscription.current.display_name }

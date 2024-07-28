@@ -154,7 +154,10 @@ resource "random_pet" "admin_username" {
 
 resource "random_password" "admin_password" { length = 16 }
 
-output "vm_credentials" { value = { (local.admin_username) : random_password.admin_password.result } }
+output "vm_credentials" {
+  sensitive = false
+  value     = { (local.admin_username) : sensitive(random_password.admin_password.result) }
+}
 
 resource "azurerm_windows_virtual_machine" "self" {
   provider            = azurerm.current
@@ -220,22 +223,8 @@ resource "azurerm_windows_virtual_machine" "self" {
   }
 }
 
-output "vm_id" {
-  value = azurerm_windows_virtual_machine.self.id
-}
-
-output "vm_name" {
-  value = azurerm_windows_virtual_machine.self.name
-}
-
-output "vm_system_assigned_identity_principal_id" {
-  value = one(azurerm_windows_virtual_machine.self.identity).principal_id
-}
-
-output "computer_name" {
-  value = azurerm_windows_virtual_machine.self.computer_name
-}
-
-output "vm_private_ip_addresses" {
-  value = azurerm_windows_virtual_machine.self.private_ip_addresses
-}
+output "vm_id" { value = azurerm_windows_virtual_machine.self.id }
+output "vm_name" { value = azurerm_windows_virtual_machine.self.name }
+output "vm_availability_zone" { value = azurerm_windows_virtual_machine.self.zone }
+output "vm_system_assigned_identity_principal_id" { value = one(azurerm_windows_virtual_machine.self.identity).principal_id }
+output "computer_name" { value = azurerm_windows_virtual_machine.self.computer_name }

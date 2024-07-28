@@ -3,9 +3,7 @@ variable "enable_aad_extension" {
   default = true
 }
 
-variable "type_handler_version" {
-  type = string
-}
+variable "type_handler_version" { type = string }
 
 resource "azurerm_virtual_machine_extension" "aad_login" {
   count                      = var.enable_aad_extension ? 1 : 0
@@ -13,6 +11,7 @@ resource "azurerm_virtual_machine_extension" "aad_login" {
   name                       = "AADLogin"
   tags                       = merge(var.tags, {})
   virtual_machine_id         = azurerm_windows_virtual_machine.self.id
+  provision_after_extensions = []
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADLoginForWindows"
   type_handler_version       = var.type_handler_version

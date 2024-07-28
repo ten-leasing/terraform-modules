@@ -39,6 +39,9 @@ resource "azurerm_network_interface" "vm" {
   }
 }
 
+output "vm_primary_private_ip_address" { value = azurerm_network_interface.vm.private_ip_address }
+output "vm_private_ip_addresses" { value = azurerm_network_interface.vm.private_ip_addresses }
+
 resource "azurerm_network_security_group" "vm" {
   provider            = azurerm.current
   resource_group_name = var.resource_group_name
