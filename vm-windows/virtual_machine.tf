@@ -219,7 +219,7 @@ resource "azurerm_windows_virtual_machine" "self" {
   }
 
   lifecycle {
-    replace_triggered_by = [azurerm_network_interface.vm]
+    # replace_triggered_by = [azurerm_network_interface.vm]
   }
 }
 
