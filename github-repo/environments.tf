@@ -8,7 +8,7 @@ variable "ENVIRONMENTS" {
 }
 
 module "environment" {
-  source = "../environment"
+  source = "../github-repo-environment"
 
   for_each = var.ENVIRONMENTS
 
