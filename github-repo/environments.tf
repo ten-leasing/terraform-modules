@@ -13,7 +13,6 @@ module "environment" {
   for_each = var.ENVIRONMENTS
 
   GITHUB_REPOSITORY_NAME = github_repository.self.name
-  RESOURCE_GROUP_NAME    = each.value.resource_group_name
   NAME                   = each.key
   VARIABLES              = each.value.variables == null ? null : each.value.variables
 }
