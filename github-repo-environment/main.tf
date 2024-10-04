@@ -29,6 +29,7 @@ resource "github_repository_environment" "self" {
 
   can_admins_bypass   = var.ADMIN_BYPASS
   prevent_self_review = var.PREVENT_SELF_REVIEW
+
   dynamic "reviewers" {
     for_each = var.REVIEWERS == null ? [] : [var.REVIEWERS]
 
