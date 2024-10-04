@@ -10,7 +10,7 @@ variable "ENVIRONMENTS" {
 module "environment" {
   source = "../github-repo-environment"
 
-  for_each = var.ENVIRONMENTS
+  for_each = var.ENVIRONMENTS == null ? {} : var.ENVIRONMENTS
 
   GITHUB_REPOSITORY_NAME = github_repository.self.name
   NAME                   = each.key
