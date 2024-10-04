@@ -1,7 +1,6 @@
 variable "ENVIRONMENTS" {
   type = map(object({
-    resource_group_name = string
-    variables           = optional(map(string))
+    variables = optional(map(string))
   }))
   nullable = true
   default  = null
