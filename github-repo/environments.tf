@@ -1,12 +1,13 @@
 variable "ENVIRONMENTS" {
   type = map(object({
-    variables           = optional(map(string))
     admin_bypass        = optional(bool)
     prevent_self_review = optional(bool)
     reviewers = optional(object({
       teams = optional(set(number))
       users = optional(set(number))
     }))
+    variables = optional(map(string))
+    secrets   = optional(map(string))
   }))
   nullable = true
   default  = null
@@ -19,10 +20,11 @@ module "environment" {
 
   GITHUB_REPOSITORY_NAME = github_repository.self.name
   NAME                   = each.key
-  VARIABLES              = each.value.variables == null ? null : each.value.variables
   ADMIN_BYPASS           = each.value.admin_bypass
   PREVENT_SELF_REVIEW    = each.value.prevent_self_review
   REVIEWERS              = each.value.reviewers
+  VARIABLES              = each.value.variables
+  SECRETS                = each.value.secrets
 }
 
 output "environment" { value = module.environment }

@@ -22,6 +22,12 @@ variable "VARIABLES" {
   nullable = true
   default  = null
 }
+variable "SECRETS" {
+  type      = map(string)
+  nullable  = true
+  default   = null
+  sensitive = true
+}
 
 resource "github_repository_environment" "self" {
   repository  = var.GITHUB_REPOSITORY_NAME
@@ -48,6 +54,16 @@ resource "github_actions_environment_variable" "variables" {
   repository  = github_repository_environment.self.repository
   environment = github_repository_environment.self.environment
 
-  value         = each.value
   variable_name = each.key
+  value         = each.value
+}
+
+resource "github_actions_environment_secret" "secrets" {
+  for_each = nonsensitive(var.SECRETS) == null ? {} : nonsensitive(var.SECRETS)
+
+  repository  = github_repository_environment.self.repository
+  environment = github_repository_environment.self.environment
+
+  secret_name     = each.key
+  plaintext_value = each.value
 }
