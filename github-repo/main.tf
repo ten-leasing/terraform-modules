@@ -24,6 +24,10 @@ resource "github_repository" "self" {
   has_issues                  = var.ENABLE_ISSUES
   has_projects                = false
   has_wiki                    = false
+
+  lifecycle {
+    ignore_changes = [homepage_url]
+  }
 }
 
 output "github_repository" { value = github_repository.self }
