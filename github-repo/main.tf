@@ -1,6 +1,11 @@
 variable "NAME" { type = string }
 variable "DESCRIPTION" { type = string }
 
+variable "AUTO_INIT" {
+  type    = bool
+  default = false
+}
+
 variable "ENABLE_ISSUES" {
   type    = bool
   default = false
@@ -40,7 +45,7 @@ resource "github_repository" "self" {
   has_projects                = false
   has_wiki                    = false
   is_template                 = var.IS_TEMPLATE
-  auto_init                   = true
+  auto_init                   = var.AUTO_INIT
 
   lifecycle {
     ignore_changes = [homepage_url]
