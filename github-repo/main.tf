@@ -1,10 +1,6 @@
 variable "NAME" { type = string }
 variable "DESCRIPTION" { type = string }
 
-variable "AUTO_INIT" {
-  type    = bool
-  default = false
-}
 
 variable "ENABLE_ISSUES" {
   type    = bool
@@ -12,16 +8,6 @@ variable "ENABLE_ISSUES" {
 }
 
 variable "IS_TEMPLATE" {
-  type    = bool
-  default = false
-}
-
-variable "DEFAULT_BRANCH_NAME" {
-  type    = string
-  default = "default"
-}
-
-variable "RENAME_EXISTING_DEFAULT_BRANCH" {
   type    = bool
   default = false
 }
@@ -45,21 +31,9 @@ resource "github_repository" "self" {
   has_projects                = false
   has_wiki                    = false
   is_template                 = var.IS_TEMPLATE
-  auto_init                   = var.AUTO_INIT
 
   lifecycle {
     ignore_changes = [homepage_url]
   }
 }
 output "github_repository" { value = github_repository.self }
-
-resource "github_branch" "default" {
-  branch     = var.DEFAULT_BRANCH_NAME
-  repository = github_repository.self.name
-}
-
-resource "github_branch_default" "self" {
-  repository = github_repository.self.name
-  branch     = github_branch.default.branch
-  rename     = var.RENAME_EXISTING_DEFAULT_BRANCH
-}
