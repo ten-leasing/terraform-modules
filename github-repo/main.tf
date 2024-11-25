@@ -60,6 +60,6 @@ resource "github_branch" "default" {
 
 resource "github_branch_default" "self" {
   repository = github_repository.self.name
-  branch     = var.DEFAULT_BRANCH_NAME
+  branch     = github_branch.default.branch
   rename     = var.RENAME_EXISTING_DEFAULT_BRANCH
 }
