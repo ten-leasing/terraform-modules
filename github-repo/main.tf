@@ -40,6 +40,7 @@ resource "github_repository" "self" {
   has_projects                = false
   has_wiki                    = false
   is_template                 = var.IS_TEMPLATE
+  auto_init                   = true
 
   lifecycle {
     ignore_changes = [homepage_url]
@@ -47,10 +48,10 @@ resource "github_repository" "self" {
 }
 output "github_repository" { value = github_repository.self }
 
-# resource "github_branch" "default" {
-#   branch = "default"
-#   repository = "value"
-# }
+resource "github_branch" "default" {
+  branch     = var.DEFAULT_BRANCH_NAME
+  repository = github_repository.self.name
+}
 
 resource "github_branch_default" "self" {
   repository = github_repository.self.name
