@@ -11,6 +11,11 @@ variable "IS_TEMPLATE" {
   default = false
 }
 
+variable "DEFAULT_BRANCH_NAME" {
+  type    = string
+  default = "default"
+}
+
 variable "RENAME_EXISTING_DEFAULT_BRANCH" {
   type    = bool
   default = false
@@ -49,6 +54,6 @@ output "github_repository" { value = github_repository.self }
 
 resource "github_branch_default" "self" {
   repository = github_repository.self.name
-  branch     = "default"
+  branch     = var.DEFAULT_BRANCH_NAME
   rename     = var.RENAME_EXISTING_DEFAULT_BRANCH
 }
