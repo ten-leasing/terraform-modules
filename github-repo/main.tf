@@ -6,6 +6,11 @@ variable "ENABLE_ISSUES" {
   default = false
 }
 
+variable "IS_TEMPLATE" {
+  type    = bool
+  default = false
+}
+
 resource "github_repository" "self" {
   name        = var.NAME
   description = var.DESCRIPTION
@@ -24,6 +29,7 @@ resource "github_repository" "self" {
   has_issues                  = var.ENABLE_ISSUES
   has_projects                = false
   has_wiki                    = false
+  is_template                 = var.IS_TEMPLATE
 
   lifecycle {
     ignore_changes = [homepage_url]
