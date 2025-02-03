@@ -5,7 +5,7 @@ run "application-insights" {
     condition = local.application_insights == format(
       "%s-%s",
       local.application_insights_config.abbrev,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
     )
     error_message = "application-insights naming convention is incorrect"
   }

@@ -6,9 +6,11 @@ locals {
   }
 
   managed_grafana = format(
-    "%s-%s",
+    "%s-%s-%s%s",
     local.managed_grafana_config.abbrev,
-    var.PROJECT_KEY,
+    var.ORG_KEY,
+    var.RESOURCE_NAME,
+    var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
   )
 }
 

@@ -8,7 +8,7 @@ locals {
   managed_identity = format(
     "%s-%s",
     local.managed_identity_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

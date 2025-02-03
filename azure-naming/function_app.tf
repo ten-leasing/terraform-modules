@@ -9,7 +9,7 @@ locals {
     "%s-%s-%s%s",
     local.function_app_config.abbrev,
     var.ORG_KEY,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
     var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
   )
 }

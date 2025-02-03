@@ -8,7 +8,7 @@ locals {
   application_insights = format(
     "%s-%s",
     local.application_insights_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

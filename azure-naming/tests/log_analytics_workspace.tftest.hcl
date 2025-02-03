@@ -5,7 +5,7 @@ run "log-analytics-workspace" {
     condition = local.log_analytics_workspace == format(
       "%s-%s",
       local.log_analytics_workspace_config.abbrev,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
     )
     error_message = "log-analytics-workspace naming convention is incorrect"
   }

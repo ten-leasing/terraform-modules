@@ -8,7 +8,7 @@ locals {
   virtual_machine = format(
     "%s-%s",
     local.virtual_machine_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

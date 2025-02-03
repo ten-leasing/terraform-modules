@@ -8,7 +8,7 @@ locals {
   log_analytics_workspace = format(
     "%s-%s",
     local.log_analytics_workspace_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

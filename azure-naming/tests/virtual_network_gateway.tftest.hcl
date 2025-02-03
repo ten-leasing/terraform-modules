@@ -5,7 +5,7 @@ run "virtual-network-gateway" {
     condition = local.virtual_network_gateway == format(
       "%s-%s",
       local.virtual_network_gateway_config.abbrev,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
     )
     error_message = "virtual-network-gateway naming convention is incorrect"
   }

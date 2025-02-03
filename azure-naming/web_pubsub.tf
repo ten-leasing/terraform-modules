@@ -5,9 +5,11 @@ locals {
   }
 
   web_pubsub = format(
-    "%s-%s",
+    "%s-%s-%s%s",
     local.web_pubsub_config.abbrev,
-    var.PROJECT_KEY,
+    var.ORG_KEY,
+    var.RESOURCE_NAME,
+    var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
   )
 }
 

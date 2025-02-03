@@ -8,7 +8,7 @@ locals {
   virtual_network = format(
     "%s-%s",
     local.virtual_network_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

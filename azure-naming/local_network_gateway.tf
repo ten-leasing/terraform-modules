@@ -8,7 +8,7 @@ locals {
   local_network_gateway = format(
     "%s-%s",
     local.local_network_gateway_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

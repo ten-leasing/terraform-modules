@@ -5,7 +5,7 @@ run "virtual-network-peering" {
     condition = local.virtual_network_peering == format(
       "%s-%s",
       local.virtual_network_peering_config.abbrev,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
     )
     error_message = "virtual-network-peering naming convention is incorrect"
   }

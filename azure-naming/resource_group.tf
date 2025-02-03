@@ -8,7 +8,7 @@ locals {
   resource_group = format(
     "%s-%s",
     local.resource_group_config.abbrev,
-    var.PROJECT_KEY,
+    var.RESOURCE_NAME,
   )
 }
 

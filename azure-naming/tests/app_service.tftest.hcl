@@ -8,12 +8,11 @@ run "app-service" {
 
   assert {
     condition = local.app_service_plan == format(
-      "%s-%s-%s",
+      "%s-%s",
       local.app_service_plan_config.abbrev,
-      var.ORG_KEY,
-      var.SUBSCRIPTION_NAME
+      var.RESOURCE_NAME,
     )
-    error_message = "app-service environment naming convention is incorrect"
+    error_message = "app-service plan naming convention is incorrect"
   }
 
   assert {
@@ -21,7 +20,7 @@ run "app-service" {
       "%s-%s-%s%s",
       local.app_service_config.abbrev,
       var.ORG_KEY,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
     error_message = "app-service naming convention is incorrect"

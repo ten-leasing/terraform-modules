@@ -6,9 +6,11 @@ locals {
   }
 
   key_vault = format(
-    "%s-%s",
+    "%s-%s-%s%s",
     local.key_vault_config.abbrev,
-    var.PROJECT_KEY,
+    var.ORG_KEY,
+    var.RESOURCE_NAME,
+    var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
   )
 }
 

@@ -5,7 +5,7 @@ run "virtual-machine" {
     condition = local.virtual_machine == format(
       "%s-%s",
       local.virtual_machine_config.abbrev,
-      var.PROJECT_KEY,
+      var.RESOURCE_NAME,
     )
     error_message = "virtual-machine naming convention is incorrect"
   }

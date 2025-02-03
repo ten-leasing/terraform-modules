@@ -6,10 +6,11 @@ locals {
   }
 
   application_configuration = format(
-    "%s-%s-%s",
+    "%s-%s-%s%s",
     local.application_configuration_config.abbrev,
     var.ORG_KEY,
-    var.PROJECT_KEY
+    var.RESOURCE_NAME,
+    var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
   )
 }
 

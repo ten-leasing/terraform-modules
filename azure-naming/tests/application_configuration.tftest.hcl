@@ -6,7 +6,7 @@ run "application-configuration" {
       "%s-%s-%s",
       local.application_configuration_config.abbrev,
       var.ORG_KEY,
-      var.PROJECT_KEY
+      var.RESOURCE_NAME
     )
     error_message = "application-configuration naming convention is incorrect"
   }
