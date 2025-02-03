@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "resource-group" { value = local.resource_group }
+output "resource_group" { value = local.resource_group }

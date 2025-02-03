@@ -14,4 +14,4 @@ locals {
   )
 }
 
-output "function-app" { value = local.function_app }
+output "function_app" { value = local.function_app }

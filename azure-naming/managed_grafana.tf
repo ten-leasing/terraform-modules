@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "managed-grafana" { value = local.managed_grafana }
+output "managed_grafana" { value = local.managed_grafana }

@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "virtual-network" { value = local.virtual_network }
+output "virtual_network" { value = local.virtual_network }

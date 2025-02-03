@@ -14,10 +14,6 @@
 
 # output "data-factory" { value = "adf" }
 
-# output "dns-private-resolver" { value = "dnspr" }
-# output "dns-private-resolver-inbound" { value = "in" }
-# output "dns-private-resolver-outbound" { value = "out" }
-
 # output "event-hub" { value = "evh" }
 # output "event-hub-namespace" { value = "evhns" }
 
@@ -64,12 +60,10 @@
 
 # output "private-link" { value = "pl" }
 
-# output "public-ip-address" { value = "pip" }
 # output "public-ip-address-prefix" { value = "ippre" }
 
 # output "route-filter" { value = "rf" }
 # output "route-server" { value = "rtserv" }
-# output "route-table" { value = "rt" }
 
 # output "service-bus-namespace" { value = "sbns" }
 # output "service-bus-queue" { value = "sbq" }
@@ -88,20 +82,13 @@
 
 # output "user-defined-route" { value = "udr" }
 
-# output "virtual-network" { value = "vnet" }
-# output "virtual-network-gateway" { value = "vgw" }
 # output "virtual-network-manager" { value = "vnm" }
-# output "virtual-network-peering" { value = "peer" }
-# output "virtual-network-subnet" { value = "snet" }
 
 # output "virtual-machine-maintenance-configuration" { value = "mc" }
 # output "virtual-machine-storage-account" { value = "stvm" }
 
-# output "vpn-connection" { value = "vcn" }
 # output "vpn-gateway" { value = "vpng" }
 # output "vpn-site" { value = "vst" }
 
 # output "web-application-firewall-policy" { value = "waf" }
 # output "web-application-firewall-policy-rule-group" { value = "wafrg" }
-
-# output "web-pub-sub" { value = "wps" }

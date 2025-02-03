@@ -14,4 +14,4 @@ locals {
   )
 }
 
-output "storage-account" { value = local.storage_account }
+output "storage_account" { value = local.storage_account }

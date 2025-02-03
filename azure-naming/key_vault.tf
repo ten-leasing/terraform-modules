@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "key-vault" { value = local.key_vault }
+output "key_vault" { value = local.key_vault }

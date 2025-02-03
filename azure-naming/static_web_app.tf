@@ -14,4 +14,4 @@ locals {
   )
 }
 
-output "static-web-app" { value = local.static_web_app }
+output "static_web_app" { value = local.static_web_app }

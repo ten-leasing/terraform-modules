@@ -36,6 +36,6 @@ locals {
   )
 }
 
-output "private-dns-resolver" { value = local.private_dns_resolver }
-output "private-dns-inbound" { value = local.private_dns_resolver_inbound }
-output "private-dns-outbound" { value = local.private_dns_resolver_outbound }
+output "private_dns_resolver" { value = local.private_dns_resolver }
+output "private_dns_inbound" { value = local.private_dns_resolver_inbound }
+output "private_dns_outbound" { value = local.private_dns_resolver_outbound }

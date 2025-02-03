@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "virtual-network-gateway" { value = local.virtual_network_gateway }
+output "virtual_network_gateway" { value = local.virtual_network_gateway }

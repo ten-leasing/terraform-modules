@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "public-ip" { value = local.public_ip }
+output "public_ip" { value = local.public_ip }

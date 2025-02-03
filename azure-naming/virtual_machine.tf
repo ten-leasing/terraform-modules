@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "virtual-machine" { value = local.virtual_machine }
+output "virtual_machine" { value = local.virtual_machine }

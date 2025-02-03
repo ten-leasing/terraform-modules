@@ -11,4 +11,4 @@ locals {
   )
 }
 
-output "web-pubsub" { value = local.web_pubsub }
+output "web_pubsub" { value = local.web_pubsub }

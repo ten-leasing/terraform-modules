@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "managed-identity" { value = local.managed_identity }
+output "managed_identity" { value = local.managed_identity }

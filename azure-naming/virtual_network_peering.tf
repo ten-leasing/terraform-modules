@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "virtual-network-peering" { value = local.virtual_network_peering }
+output "virtual_network_peering" { value = local.virtual_network_peering }

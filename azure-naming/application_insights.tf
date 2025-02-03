@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "application-insights" { value = local.application_insights }
+output "application_insights" { value = local.application_insights }

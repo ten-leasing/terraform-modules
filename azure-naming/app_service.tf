@@ -36,5 +36,5 @@ locals {
 }
 
 # output "app-service-environment" { value = local.app_service_environment }
-output "app-service-plan" { value = local.app_service_plan }
-output "app-service" { value = local.app_service }
+output "app_service_plan" { value = local.app_service_plan }
+output "app_service" { value = local.app_service }

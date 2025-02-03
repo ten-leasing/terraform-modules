@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "route-table" { value = local.route_table }
+output "route_table" { value = local.route_table }

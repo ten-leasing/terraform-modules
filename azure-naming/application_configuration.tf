@@ -13,4 +13,4 @@ locals {
   )
 }
 
-output "app-configuration-store" { value = local.application_configuration }
+output "app_configuration_store" { value = local.application_configuration }

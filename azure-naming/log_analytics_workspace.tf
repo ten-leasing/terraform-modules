@@ -12,4 +12,4 @@ locals {
   )
 }
 
-output "log-analytics-workspace" { value = local.log_analytics_workspace }
+output "log_analytics_workspace" { value = local.log_analytics_workspace }
