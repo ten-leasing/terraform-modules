@@ -3,8 +3,9 @@ run "virtual-network" {
 
   assert {
     condition = local.virtual_network == format(
-      "%s-%s",
+      "%s-%s-%s",
       local.virtual_network_config.abbrev,
+      var.ORG_KEY,
       var.RESOURCE_NAME,
     )
     error_message = "virtual-network naming convention is incorrect"

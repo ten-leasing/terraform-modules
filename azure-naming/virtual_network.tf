@@ -6,8 +6,9 @@ locals {
   }
 
   virtual_network = format(
-    "%s-%s",
+    "%s-%s-%s",
     local.virtual_network_config.abbrev,
+    var.ORG_KEY,
     var.RESOURCE_NAME,
   )
 }
