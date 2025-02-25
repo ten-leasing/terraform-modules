@@ -6,8 +6,9 @@ locals {
   }
 
   resource_group = format(
-    "%s-%s",
+    "%s-%s-%s",
     local.resource_group_config.abbrev,
+    var.ORG_KEY,
     var.RESOURCE_NAME,
   )
 }
