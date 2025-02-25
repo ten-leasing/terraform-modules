@@ -6,8 +6,9 @@ locals {
   }
 
   local_network_gateway = format(
-    "%s-%s",
+    "%s-%s-%s",
     local.local_network_gateway_config.abbrev,
+    var.ORG_KEY,
     var.RESOURCE_NAME,
   )
 }

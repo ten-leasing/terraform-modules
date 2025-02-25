@@ -6,8 +6,9 @@ locals {
   }
 
   public_ip = format(
-    "%s-%s",
+    "%s-%s-%s",
     local.public_ip_config.abbrev,
+    var.ORG_KEY,
     var.RESOURCE_NAME,
   )
 }

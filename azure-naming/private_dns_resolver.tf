@@ -6,8 +6,9 @@ locals {
   }
 
   private_dns_resolver = format(
-    "%s-%s",
+    "%s-%s-%s",
     local.private_dns_resolver_config.abbrev,
+    var.ORG_KEY,
     var.RESOURCE_NAME,
   )
 
