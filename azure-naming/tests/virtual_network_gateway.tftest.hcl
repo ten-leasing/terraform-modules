@@ -3,8 +3,9 @@ run "virtual-network-gateway" {
 
   assert {
     condition = local.virtual_network_gateway == format(
-      "%s-%s",
+      "%s-%s-%s",
       local.virtual_network_gateway_config.abbrev,
+      var.ORG_KEY,
       var.RESOURCE_NAME,
     )
     error_message = "virtual-network-gateway naming convention is incorrect"
