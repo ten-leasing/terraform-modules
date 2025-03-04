@@ -6,7 +6,7 @@ locals {
   }
 
   container_registry = format(
-    "%s-%s-%s%s",
+    "%s%s%s%s",
     local.container_registry_config.abbrev,
     var.ORG_KEY,
     var.RESOURCE_NAME,
