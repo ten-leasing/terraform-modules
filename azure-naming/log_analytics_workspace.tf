@@ -5,8 +5,9 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s",
+      "%s-%s-%s",
       local.log_analytics_workspace_abbreviation,
+      var.ORG_KEY,
       var.RESOURCE_NAME,
     )
   }
