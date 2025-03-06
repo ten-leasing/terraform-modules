@@ -2,9 +2,9 @@ run "public_ip" {
   command = plan
 
   assert {
-    condition = local.public_ip == format(
+    condition = local.public_ip.name == format(
       "%s-%s-%s",
-      local.public_ip_config.abbrev,
+      local.public_ip.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
     )

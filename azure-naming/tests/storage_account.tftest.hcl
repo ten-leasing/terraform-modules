@@ -2,9 +2,9 @@ run "storage-account" {
   command = plan
 
   assert {
-    condition = local.storage_account == format(
+    condition = local.storage_account.name == format(
       "%s%s%s%s",
-      local.storage_account_config.abbrev,
+      local.storage_account.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "${var.WORKSPACE}"

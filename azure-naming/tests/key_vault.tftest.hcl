@@ -2,9 +2,9 @@ run "key-vault" {
   command = plan
 
   assert {
-    condition = local.key_vault == format(
+    condition = local.key_vault.name == format(
       "%s-%s-%s%s",
-      local.key_vault_config.abbrev,
+      local.key_vault.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"

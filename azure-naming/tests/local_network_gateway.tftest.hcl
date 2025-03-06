@@ -2,9 +2,9 @@ run "local-network-gateway" {
   command = plan
 
   assert {
-    condition = local.local_network_gateway == format(
+    condition = local.local_network_gateway.name == format(
       "%s-%s-%s",
-      local.local_network_gateway_config.abbrev,
+      local.local_network_gateway.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
     )

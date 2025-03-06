@@ -2,9 +2,9 @@ run "subnet" {
   command = plan
 
   assert {
-    condition = local.subnet == format(
+    condition = local.subnet.name == format(
       "%s-%s",
-      local.subnet_config.abbrev,
+      local.subnet.abbrev,
       var.RESOURCE_NAME,
     )
     error_message = "subnet naming convention is incorrect"

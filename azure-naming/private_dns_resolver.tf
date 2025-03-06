@@ -1,40 +1,40 @@
 locals {
-  private_dns_resolver_config = {
+  private_dns_resolver_abbreviation = "dnspr"
+  private_dns_resolver = {
     abbrev = "dnspr"
     scope  = local.scopes.resource_group
-    parent = local.resource_group_config
+    parent = local.resource_group
+    name = format(
+      "%s-%s-%s",
+      local.private_dns_resolver_abbreviation,
+      var.ORG_KEY,
+      var.RESOURCE_NAME,
+    )
   }
 
-  private_dns_resolver = format(
-    "%s-%s-%s",
-    local.private_dns_resolver_config.abbrev,
-    var.ORG_KEY,
-    var.RESOURCE_NAME,
-  )
-
-  private_dns_resolver_inbound_config = {
-    abbrev = "in"
-    scope  = local.scopes.resource_group
-    parent = local.resource_group_config
+  private_dns_resolver_inbound_abbreviation = "in"
+  private_dns_resolver_inbound = {
+    abbrev = local.private_dns_resolver_inbound_abbreviation
+    scope  = local.scopes.parent
+    parent = local.private_dns_resolver
+    name = format(
+      "%s-%s",
+      local.private_dns_resolver_inbound_abbreviation,
+      var.RESOURCE_NAME,
+    )
   }
 
-  private_dns_resolver_inbound = format(
-    "%s-%s",
-    local.private_dns_resolver_inbound_config.abbrev,
-    var.RESOURCE_NAME,
-  )
-
-  private_dns_resolver_outbound_config = {
-    abbrev = "out"
-    scope  = local.scopes.resource_group
-    parent = local.resource_group_config
+  private_dns_resolver_outbound_abbreviation = "out"
+  private_dns_resolver_outbound = {
+    abbrev = local.private_dns_resolver_outbound_abbreviation
+    scope  = local.scopes.parent
+    parent = local.private_dns_resolver
+    name = format(
+      "%s-%s",
+      local.private_dns_resolver_outbound_abbreviation,
+      var.RESOURCE_NAME,
+    )
   }
-
-  private_dns_resolver_outbound = format(
-    "%s-%s",
-    local.private_dns_resolver_outbound_config.abbrev,
-    var.RESOURCE_NAME,
-  )
 }
 
 output "private_dns_resolver" { value = local.private_dns_resolver }

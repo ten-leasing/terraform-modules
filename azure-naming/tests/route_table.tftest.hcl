@@ -2,9 +2,9 @@ run "route-table" {
   command = plan
 
   assert {
-    condition = local.route_table == format(
+    condition = local.route_table.name == format(
       "%s-%s",
-      local.route_table_config.abbrev,
+      local.route_table.abbrev,
       var.RESOURCE_NAME,
     )
     error_message = "route-table naming convention is incorrect"

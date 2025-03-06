@@ -2,9 +2,9 @@ run "application-insights" {
   command = plan
 
   assert {
-    condition = local.application_insights == format(
+    condition = local.application_insights.name == format(
       "%s-%s",
-      local.application_insights_config.abbrev,
+      local.application_insights.abbrev,
       var.RESOURCE_NAME,
     )
     error_message = "application-insights naming convention is incorrect"

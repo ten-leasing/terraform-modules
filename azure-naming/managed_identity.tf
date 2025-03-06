@@ -1,15 +1,15 @@
 locals {
-  managed_identity_config = {
-    abbrev = "id"
+  managed_identity_abbreviation = "id"
+  managed_identity = {
+    abbrev = local.managed_identity_abbreviation
     scope  = local.scopes.resource_group
-    parent = local.resource_group_config
+    parent = local.resource_group
+    name = format(
+      "%s-%s",
+      local.managed_identity_abbreviation,
+      var.RESOURCE_NAME,
+    )
   }
-
-  managed_identity = format(
-    "%s-%s",
-    local.managed_identity_config.abbrev,
-    var.RESOURCE_NAME,
-  )
 }
 
 output "managed_identity" { value = local.managed_identity }

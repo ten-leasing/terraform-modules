@@ -2,9 +2,9 @@ run "managed-grafana" {
   command = plan
 
   assert {
-    condition = local.managed_grafana == format(
+    condition = local.managed_grafana.name == format(
       "%s-%s-%s%s",
-      local.managed_grafana_config.abbrev,
+      local.managed_grafana.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"

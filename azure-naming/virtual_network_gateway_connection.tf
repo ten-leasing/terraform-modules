@@ -1,16 +1,16 @@
 locals {
-  virtual_network_gateway_connection_config = {
-    abbrev = "vcn"
+  virtual_network_gateway_connection_abbreviation = "vcn"
+  virtual_network_gateway_connection = {
+    abbrev = local.virtual_network_gateway_connection_abbreviation
     scope  = local.scopes.parent
-    parent = local.virtual_network_gateway_config
+    parent = local.virtual_network_gateway
+    name = format(
+      "%s-%s-%s",
+      local.virtual_network_gateway_connection_abbreviation,
+      var.ORG_KEY,
+      var.RESOURCE_NAME,
+    )
   }
-
-  virtual_network_gateway_connection = format(
-    "%s-%s-%s",
-    local.virtual_network_gateway_connection_config.abbrev,
-    var.ORG_KEY,
-    var.RESOURCE_NAME,
-  )
 }
 
 output "virtual_network_gateway_connection" { value = local.virtual_network_gateway_connection }

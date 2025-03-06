@@ -2,9 +2,9 @@ run "web-pubsub" {
   command = plan
 
   assert {
-    condition = local.web_pubsub == format(
+    condition = local.web_pubsub.name == format(
       "%s-%s-%s%s",
-      local.web_pubsub_config.abbrev,
+      local.web_pubsub.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"

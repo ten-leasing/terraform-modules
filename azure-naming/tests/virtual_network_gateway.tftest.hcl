@@ -2,9 +2,9 @@ run "virtual-network-gateway" {
   command = plan
 
   assert {
-    condition = local.virtual_network_gateway == format(
+    condition = local.virtual_network_gateway.name == format(
       "%s-%s-%s",
-      local.virtual_network_gateway_config.abbrev,
+      local.virtual_network_gateway.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME,
     )
