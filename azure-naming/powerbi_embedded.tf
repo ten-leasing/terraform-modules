@@ -5,10 +5,11 @@ locals {
     scope  = local.scopes.region
     parent = local.resource_group
     name = format(
-      "%s%s%s",
+      "%s%s%s%s",
       local.powerbi_embedded_abbreviation,
-      var.LOCATION,
+      var.ORG_KEY,
       var.RESOURCE_NAME,
+      var.LOCATION,
     )
   }
 }
