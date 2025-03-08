@@ -1,12 +1,12 @@
 locals {
-  sql_server_abbreviation = "sql"
-  sql_server = {
-    abbrev = local.sql_server_abbreviation
+  mssql_server_abbreviation = "sql"
+  mssql_server = {
+    abbrev = local.mssql_server_abbreviation
     scope  = local.scopes.global
     parent = local.resource_group
     name = format(
       "%s-%s-%s%s",
-      local.sql_server_abbreviation,
+      local.mssql_server_abbreviation,
       var.ORG_KEY,
       var.RESOURCE_NAME,
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
@@ -14,4 +14,4 @@ locals {
   }
 }
 
-output "sql_server" { value = local.sql_server }
+output "mssql_server" { value = local.mssql_server }
