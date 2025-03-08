@@ -3,10 +3,10 @@ run "public_ip" {
 
   assert {
     condition = local.public_ip.name == format(
-      "%s-%s-%s",
+      "%s-%s%s",
       local.public_ip.abbrev,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "public ip naming convention is incorrect"
   }

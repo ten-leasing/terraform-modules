@@ -5,10 +5,10 @@ locals {
     scope  = local.scopes.subscription
     parent = null
     name = format(
-      "%s-%s-%s",
+      "%s-%s%s",
       local.resource_group_abbreviation,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
   }
 }

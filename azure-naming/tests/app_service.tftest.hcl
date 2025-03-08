@@ -8,9 +8,9 @@ run "app-service" {
 
   assert {
     condition = local.app_service_plan.name == format(
-      "%s-%s",
+      "%s%s",
       local.app_service_plan.abbrev,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "app-service plan naming convention is incorrect"
   }

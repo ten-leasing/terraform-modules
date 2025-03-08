@@ -3,10 +3,10 @@ run "private-endpoint" {
 
   assert {
     condition = local.private_endpoint.name == format(
-      "%s-%s-%s",
+      "%s-%s%s",
       local.private_endpoint.abbrev,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "private-endpoint naming convention is incorrect"
   }

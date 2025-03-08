@@ -3,9 +3,9 @@ run "subnet" {
 
   assert {
     condition = local.subnet.name == format(
-      "%s-%s",
+      "%s%s",
       local.subnet.abbrev,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "subnet naming convention is incorrect"
   }

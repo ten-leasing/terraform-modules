@@ -5,7 +5,7 @@ locals {
     scope  = local.scopes.global
     parent = local.resource_group
     name = format(
-      "%s-%s-%s-%s",
+      "%s-%s-%s%s",
       local.app_service_environment_abbreviation,
       var.ORG_KEY,
       var.RESOURCE_NAME,
@@ -19,9 +19,9 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s",
+      "%s%s",
       local.app_service_plan_abbreviation,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
   }
 

@@ -3,9 +3,9 @@ run "route-table" {
 
   assert {
     condition = local.route_table.name == format(
-      "%s-%s",
+      "%s%s",
       local.route_table.abbrev,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "route-table naming convention is incorrect"
   }

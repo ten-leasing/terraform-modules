@@ -5,10 +5,10 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s-%s",
+      "%s-%s%s",
       local.open_ai_abbreviation,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
   }
 
@@ -18,10 +18,10 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s-%s",
+      "%s-%s%s",
       local.translator_abbreviation,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
   }
 }

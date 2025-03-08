@@ -5,9 +5,9 @@ locals {
     scope  = local.scopes.parent
     parent = local.virtual_network
     name = format(
-      "%s-%s",
+      "%s%s",
       local.virtual_network_peering_abbreviation,
-      var.RESOURCE_NAME,
+      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
   }
 }
