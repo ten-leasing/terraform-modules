@@ -5,10 +5,11 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s%s",
+      "%s-%s%s%s",
       local.private_dns_resolver_abbreviation,
       var.ORG_KEY,
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }
 
@@ -18,9 +19,10 @@ locals {
     scope  = local.scopes.parent
     parent = local.private_dns_resolver
     name = format(
-      "%s%s",
+      "%s%s%s",
       local.private_dns_resolver_inbound_abbreviation,
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }
 
@@ -30,9 +32,10 @@ locals {
     scope  = local.scopes.parent
     parent = local.private_dns_resolver
     name = format(
-      "%s%s",
+      "%s%s%s",
       local.private_dns_resolver_outbound_abbreviation,
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }
 }

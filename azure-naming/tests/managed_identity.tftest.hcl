@@ -3,8 +3,9 @@ run "managed-identity" {
 
   assert {
     condition = local.managed_identity.name == format(
-      "%s%s",
+      "%s%s%s",
       local.managed_identity.abbrev,
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
       var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
     )
     error_message = "managed-identity naming convention is incorrect"

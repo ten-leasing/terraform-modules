@@ -8,7 +8,7 @@ locals {
       "%s%s%s%s",
       local.container_registry_abbreviation,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }

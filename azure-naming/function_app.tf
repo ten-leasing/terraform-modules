@@ -5,10 +5,10 @@ locals {
     scope  = local.scopes.global
     parent = local.app_service_plan
     name = format(
-      "%s-%s-%s%s",
+      "%s-%s%s%s",
       local.function_app_abbreviation,
       var.ORG_KEY,
-      var.RESOURCE_NAME,
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }

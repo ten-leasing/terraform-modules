@@ -5,10 +5,11 @@ locals {
     scope  = local.scopes.resource_group
     parent = local.resource_group
     name = format(
-      "%s-%s%s",
+      "%s-%s%s%s",
       local.application_insights_abbreviation,
       var.ORG_KEY,
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }
 }
