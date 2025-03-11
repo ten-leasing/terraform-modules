@@ -7,7 +7,7 @@ run "virtual-network" {
       local.virtual_network.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}",
     )
     error_message = "virtual-network naming convention is incorrect"
   }

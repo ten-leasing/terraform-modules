@@ -7,7 +7,7 @@ run "virtual-network-gateway" {
       local.virtual_network_gateway.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}",
     )
     error_message = "virtual-network-gateway naming convention is incorrect"
   }

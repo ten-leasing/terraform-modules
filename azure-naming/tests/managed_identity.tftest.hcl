@@ -6,7 +6,7 @@ run "managed-identity" {
       "%s%s%s",
       local.managed_identity.abbrev,
       var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
-      var.WORKSPACE == "default" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}",
     )
     error_message = "managed-identity naming convention is incorrect"
   }
