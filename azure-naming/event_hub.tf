@@ -27,4 +27,5 @@ locals {
   }
 }
 
+output "event_hub_namespace" { value = local.event_hub_namespace }
 output "event_hub" { value = local.event_hub }
