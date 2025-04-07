@@ -18,6 +18,7 @@
 # output "event-hub-namespace" { value = "evhns" }
 
 # output "event-grid-domain" { value = "evgd" }
+# output "event-grid-subscription" { value = "evgs" }
 # output "event-grid-topic" { value = "evgt" }
 # output "event-grid-system-topic" { value = "evst" }
 
