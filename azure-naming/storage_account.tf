@@ -4,12 +4,14 @@ locals {
     abbrev = local.storage_account_abbreviation
     scope  = local.scopes.global
     parent = local.resource_group
-    name = format(
-      "%s%s%s%s",
-      local.storage_account_abbreviation,
-      var.ORG_KEY,
-      var.RESOURCE_NAME,
-      var.WORKSPACE == "default" ? "" : "${var.WORKSPACE}"
+    name = replace(
+      format(
+        "%s%s%s%s",
+        local.storage_account_abbreviation,
+        var.ORG_KEY,
+        var.RESOURCE_NAME,
+        var.WORKSPACE == "default" ? "" : "${var.WORKSPACE}"
+      ), "-", ""
     )
   }
 }
