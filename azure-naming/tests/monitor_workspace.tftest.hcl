@@ -1,14 +1,14 @@
-run "public_ip" {
+run "monitor_workspace" {
   command = plan
 
   assert {
-    condition = local.public_ip.name == format(
+    condition = local.monitor_workspace.name == format(
       "%s-%s%s%s",
-      local.public_ip.abbrev,
+      local.monitor_workspace.abbrev,
       var.ORG_KEY,
       var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
-    error_message = "public-ip naming convention is incorrect"
+    error_message = "monitor-workspace naming convention is incorrect"
   }
 }
