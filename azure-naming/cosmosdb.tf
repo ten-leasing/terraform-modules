@@ -12,6 +12,21 @@ locals {
       var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
     )
   }
+
+  cosmosdb_database_abbreviation = "cosmos"
+  cosmosdb_database = {
+    abbrev = local.cosmosdb_database_abbreviation
+    scope  = local.scopes.parent
+    parent = local.cosmosdb_nosql_account
+    name = format(
+      "%s%s%s",
+      local.cosmosdb_database_abbreviation,
+      var.RESOURCE_NAME == "" ? "" : "-${var.RESOURCE_NAME}",
+      var.WORKSPACE == "default" ? "" : "-${var.WORKSPACE}"
+    )
+  }
+
 }
 
 output "cosmosdb_nosql_account" { value = local.cosmosdb_nosql_account }
+output "cosmosdb_database" { value = local.cosmosdb_database }
